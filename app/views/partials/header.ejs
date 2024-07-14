@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Parc d'Attraction</title>
+    
+    
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <img src="./logo.jpg" alt="Logo" class="logo">
+            <ul class="navbar-list">
+                <li class="navbar-item"><a href="/" class="navbar-link">Accueil</a></li>
+                <li class="navbar-item"><a href="/attraction" class="navbar-link">Attraction</a></li>
+                <li class="navbar-item"><a href="/reservation" class="navbar-link">Réservation</a></li>
+                <% if (currentUser) { %>
+                    <li class="navbar-item navbar-profile">
+                        <span class="navbar-link">
+                            <i class="fas fa-user-circle profile-icon"></i>
+                            <%= currentUser.username %>
+                        </span>
+                    </li>
+                    <li class="navbar-item"><a href="/logout" class="navbar-link">Déconnexion</a></li>
+                <% } else { %>
+                    <li class="navbar-item navbar-right">
+                        <a href="/login" class="navbar-link">Se connecter</a>
+                        <a href="/register" class="navbar-link">S'inscrire</a>
+                    </li>
+                <% } %>
+            </ul>
+        </nav>   
+    </header>
+    <script src="/app.js"></script>
+</body>
+</html>

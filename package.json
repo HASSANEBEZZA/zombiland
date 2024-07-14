@@ -1,0 +1,28 @@
+{
+  "name": "zombieland",
+  "version": "1.0.0",
+  "description": "C'est un  projet qui vise à développer un site internet pour presenter les les différentes services d'un parc d'attraction, ce qui va permettre aux utilisateurs de découvrir les maneges, les spectacles, et les restaurants et les pour les gens qui veulent  dormir sur place . La partie backend de ce projet utilise Node.js pour le serveur et PostgreSQL comme base de données. Nous avons mis en place une API pour gérer les opérations CRUD (Create, Read, Update, Delete) sur les données de site.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.14",
+    "parser": "^0.1.4",
+    "pg": "^8.12.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.3",
+    "sib-api-v3-sdk": "^8.5.0"
+  }
+}

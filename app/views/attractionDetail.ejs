@@ -1,0 +1,57 @@
+<%- include('partials/header') %>
+
+
+<div class="attraction-container">
+    <h2><%= attraction.name %></h2>
+    <p><strong>Category:</strong> <%= attraction.category %></p>
+    <div class="image-like-container">
+        <img class="attraction-image" src="<%= attraction.photo_url %>" alt="<%= attraction.name %>">
+        <div class="like-section">
+            <% if (userId) { %>
+                <button class="like-btn <%= attraction.userLiked ? 'liked' : '' %>" data-attraction-id="<%= attraction.id %>">
+                    <span class="heart <%= attraction.userLiked ? 'red-heart' : '' %>">&hearts;</span>
+                </button>
+            <% } else { %>
+                <p>Veuillez vous connecter pour aimer cette attraction.</p>
+            <% } %>
+            <span class="like-count" id="like-count"><%= attraction.AttractionLikes.length %></span>
+        </div>
+    </div>
+    <p><%= attraction.description %></p>
+</div>
+
+<div class="comments-container">
+    <h3>Comments</h3>
+    <% attraction.Comments.forEach(comment => { %>
+        <div class="comment">
+            <p class="username"><%= comment.User.username %></p>
+            <p><%= comment.comment %></p>
+            <% if (comment.User.id === userId) { %>
+                <!-- Modifier le commentaire -->
+                <form action="/updateComment/<%= comment.id %>" method="POST">
+                    <input type="text" name="commentText" value="<%= comment.comment %>">
+                    <button type="submit">Modifier</button>
+                </form>
+                <!-- Supprimer le commentaire -->
+                <form action="/deleteComment/<%= comment.id %>" method="POST">
+                    <button type="submit">Supprimer</button>
+                </form>
+            <% } %>
+        </div>
+    <% }) %>
+
+    <!-- Ajouter un commentaire -->
+    <% if (userId) { %>
+        <form action="/addComment" method="POST">
+            <input type="hidden" name="userId" value="<%= userId %>">
+            <input type="hidden" name="attractionId" value="<%= attraction.id %>">
+            <textarea name="comment" rows="4" placeholder="Ajouter un commentaire"></textarea>
+            <button type="submit">Ajouter</button>
+        </form>
+    <% } else { %>
+        <p>Veuillez vous connecter pour ajouter un commentaire.</p>
+    <% } %>
+</div>
+
+<%- include('partials/footer') %>
+

@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+<main>
+  <div class="titre-attraction">  <h1 >Liste des Attractions</h1> </div>
+  <div class="attractions-list">
+      <% attractions.forEach(function(attraction) { %>
+          <div class="attraction">
+              <a href="/attractionDetail/<%= attraction.id %>">
+                  <div class="image-container">
+                      <img src="<%= attraction.photo_url %>" alt="<%= attraction.name %>">
+                  </div>
+                  <h2><%= attraction.name %></h2>
+                  <p><strong>Catégorie:</strong> <%= attraction.category %></p>
+              </a>
+          </div>
+      <% }); %>
+  </div>
+</main>
+<%- include('partials/footer') %>

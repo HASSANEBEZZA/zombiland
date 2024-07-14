@@ -1,0 +1,35 @@
+<%- include('partials/header') %>
+
+<div id="reservation-page">
+    <p>Bienvenue à Zombieland !</p>
+    <p>Pour réserver votre billet d'entrée au parc d'attraction Zombieland, veuillez remplir le formulaire ci-dessous 
+    en indiquant les dates et les journées de votre choix dans la barre de message de réservation.
+    Un administrateur de notre parc prendra contact avec vous pour finaliser votre réservation.</p>
+
+    <p>Formulaire de réservation :</p>
+
+    <form action="/reservation" method="POST">
+        <label for="Nom Complet">Nom Complet:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="Âge">Âge:</label>
+        <input type="text" id="age" name="age">
+
+        <label for="Numéro de Téléphone">Numéro de Téléphone:</label>
+        <input type="text" id="recipientNumber" name="recipientNumber" required>
+
+        <label for="Adresse E-mail">Adresse E-mail:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message de réservation">Message:</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+
+        <input type="submit" value="Envoyer">
+    </form>
+
+    <div class="thank-you">
+        <p>Merci et à bientôt à Zombieland !</p>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
