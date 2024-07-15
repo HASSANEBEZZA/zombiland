@@ -8,7 +8,7 @@ dotenv.config();
 
 // Création d'une instance Sequelize
 
-const sequelize = new Sequelize(process.env.DB_URL, {
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
   protocol: "postgres",
   logging: false,
