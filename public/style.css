@@ -1474,3 +1474,11 @@ input[type="password"] {
 #main-content .button:hover {
     background-color: #1fe249;
 }
+
+
+
+        /* CSS pour le lecteur audio invisible */
+        .hidden-audio {
+            position: absolute;
+            left: -9999px; /* Hors de l'écran */
+        }
