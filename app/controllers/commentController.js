@@ -11,7 +11,7 @@ exports.addComment = async (req, res) => {
     });
     res.redirect(`/attractionDetail/${attractionId}`);
   } catch (error) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).render("500");
   }
 };
 
@@ -22,13 +22,13 @@ exports.updateComment = async (req, res) => {
   try {
     const comment = await Comment.findByPk(commentId);
     if (!comment) {
-      return res.status(404).send("Comment not found");
+      return res.status(404).render("404");
     }
     comment.comment = commentText;
     await comment.save();
     res.redirect(`/attractionDetail/${comment.attraction_id}`);
   } catch (error) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).render("500");
   }
 };
 
@@ -38,11 +38,11 @@ exports.deleteComment = async (req, res) => {
   try {
     const comment = await Comment.findByPk(commentId);
     if (!comment) {
-      return res.status(404).send("Comment not found");
+      return res.status(404).render("404");
     }
     await comment.destroy();
     res.redirect(`/attractionDetail/${comment.attraction_id}`);
   } catch (error) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).render("500");
   }
 };

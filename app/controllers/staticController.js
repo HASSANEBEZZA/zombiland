@@ -1,5 +1,6 @@
 // Importez la fonction sendEmail depuis le fichier mailer.js
 const { sendEmail } = require("../config/mailer");
+const path = require("path");
 
 class StaticController {
   // Méthode pour rendre la page d'accueil
@@ -53,16 +54,14 @@ class StaticController {
       );
 
       if (emailSent) {
-        res.send(
-          `Merci ${name} pour votre message ! Nous reviendrons vers vous bientôt.`
-        );
+        // Rendre la page de succès
+        res.render("message", { name }); // 'message' est le nom du fichier EJS sans extension
       } else {
         throw new Error("Échec de l'envoi de l'e-mail");
       }
     } catch (error) {
-      res
-        .status(500)
-        .send("Échec de l'envoi de l'e-mail. Veuillez réessayer plus tard.");
+      // Rendre la page d'erreur
+      res.status(500).render("404");
     }
   }
 }

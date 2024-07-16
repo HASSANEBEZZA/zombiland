@@ -10,7 +10,6 @@ exports.addLike = async (req, res) => {
   try {
     // Vérifier si l'utilisateur est authentifié
     if (!userId) {
-      console.log("User not authenticated");
       return res.status(401).json({ error: "User not authenticated" });
     }
 

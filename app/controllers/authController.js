@@ -8,22 +8,22 @@ exports.register = async (req, res) => {
   const { username, email, confirmEmail, password, confirmPassword } = req.body;
 
   if (email !== confirmEmail) {
-    return res.status(400).send("Les emails ne correspondent pas");
+    return res.status(400).render("emailTaken.ejs");
   }
 
   if (password !== confirmPassword) {
-    return res.status(400).send("Les mots de passe ne correspondent pas");
+    return res.status(400).render("passwordMismatch");
   }
 
   try {
     const existingUser = await User.findOne({ where: { username } });
     if (existingUser) {
-      return res.status(400).send("Le nom d'utilisateur est déjà pris");
+      return res.status(400).render("emailMismatch");
     }
 
     const existingEmail = await User.findOne({ where: { email } });
     if (existingEmail) {
-      return res.status(400).send("L'email est déjà enregistré");
+      return res.status(400).render("usernameTaken");
     }
 
     const hash = await bcrypt.hash(password, 10);
@@ -41,7 +41,7 @@ exports.login = async (req, res) => {
   try {
     const user = await User.findOne({ where: { email } });
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).send("Identifiants invalides");
+      return res.status(401).render("401");
     }
 
     req.session.userId = user.id; // Stocke l'ID de l'utilisateur dans la session

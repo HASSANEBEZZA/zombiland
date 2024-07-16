@@ -6,7 +6,7 @@ exports.getAttractions = async (req, res) => {
     const attractions = await Attraction.findAll();
     res.render("attraction", { attractions });
   } catch (error) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).render("500");
   }
 };
 
@@ -34,11 +34,11 @@ exports.getAttractionDetails = async (req, res) => {
     });
 
     if (!attraction) {
-      return res.status(404).send("Attraction not found");
+      return res.status(404).render("404");
     }
 
     res.render("attractionDetail", { attraction, userId });
   } catch (error) {
-    res.status(500).send("Internal Server Error");
+    res.status(500).render("500");
   }
 };

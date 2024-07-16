@@ -14,7 +14,7 @@ exports.handleForgotPassword = async (req, res) => {
   try {
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      return res.status(404).send("No account with that email found.");
+      return res.status(404).render("404");
     }
 
     // Générer un token de réinitialisation
@@ -64,7 +64,7 @@ exports.handleResetPassword = async (req, res) => {
   const { password, confirmPassword } = req.body;
 
   if (password !== confirmPassword) {
-    return res.status(400).send("Passwords do not match.");
+    return res.status(400).render("404");
   }
 
   try {
@@ -72,7 +72,7 @@ exports.handleResetPassword = async (req, res) => {
     const user = await User.findOne({ where: { id: decoded.id } });
 
     if (!user) {
-      return res.status(404).send("Invalid token or user does not exist.");
+      return res.status(404).render("404");
     }
 
     const hash = await bcrypt.hash(password, 10);
