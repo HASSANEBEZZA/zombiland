@@ -882,6 +882,15 @@ form button:hover {
     background-color: #218838;
 }
 
+@media screen and (max-width: 768px) {
+    .attraction-container{
+        margin-top: 220px;
+    }
+
+}
+
+
+
 
 /* ============ ===================== style css pour attraction.ejs =================== */
 .titre-attraction{ 
