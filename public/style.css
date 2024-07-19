@@ -484,6 +484,10 @@ main {
         max-width: 90%; 
         margin-top: 250px;
     }
+    .titre-attraction{
+        max-width: 90%; 
+        margin-top: 250px;
+    }
 }
 
 @media screen and (max-width: 480px) {
