@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politique de Cookies</title>
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/details-cookies.css">
+
+</head>
+<body class="page-wrapper">
+    <%- include('partials/header') %>
+
+    <div class="page-content">
+        <!-- Overlay pour rendre la page non-interactive -->
+        <div class="cookie-overlay" id="overlay">
+            <div class="cookie-overlay-content">
+                <button class="close-button" id="closeButton">&times;</button>
+                <h1 class="cookie-policy-title">Politique de Cookies</h1>
+                <main>
+                    <section>
+                        <p class="cookie-policy-text">Nous utilisons des cookies sur notre site web pour améliorer votre expérience de navigation, analyser l’utilisation du site et vous proposer des contenus et publicités personnalisés. Les cookies sont de petits fichiers texte qui sont stockés sur votre appareil lorsque vous visitez notre site.</p>
+                    </section>
+                    <section>
+                        <h2 class="cookie-policy-subtitle">Types de Cookies Utilisés</h2>
+                        <ul class="cookie-policy-list">
+                            <li class="cookie-policy-list-item"><strong>Cookies Essentiels :</strong> Ces cookies sont nécessaires pour le bon fonctionnement du site...</li>
+                            <li class="cookie-policy-list-item"><strong>Cookies de Performance :</strong> Ces cookies nous aident à analyser la façon dont les visiteurs...</li>
+                            <!-- Autres éléments de liste -->
+                        </ul>
+                    </section>
+                    <section>
+                        <h2 class="cookie-policy-subtitle">Gestion des Cookies</h2>
+                        <p class="cookie-policy-text">Vous pouvez choisir d'accepter ou de refuser les cookies...</p>
+                        <p class="cookie-policy-text">Pour plus d’informations sur la gestion des cookies, veuillez consulter les paramètres de votre navigateur ou visiter <a href="http://www.allaboutcookies.org" target="_blank" class="cookie-policy-link">www.allaboutcookies.org</a>.</p>
+                    </section>
+                    <section>
+                        <h2 class="cookie-policy-subtitle">Modifications de la Politique de Cookies</h2>
+                        <p class="cookie-policy-text">Nous pouvons mettre à jour cette politique de temps à autre pour refléter les changements...</p>
+                    </section>
+                    <div class="cookie-buttons">
+                        <button id="acceptCookies">Accepter</button>
+                        <button id="refuseCookies">Refuser</button>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+    <script src="/js/details-cookies.js"></script>
+    <script src="/js/header.js"></script>
+    
+</body>
+</html>

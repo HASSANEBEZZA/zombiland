@@ -4,20 +4,25 @@ const { Attraction, Comment, Like, User } = require("../models");
 exports.getAttractions = async (req, res) => {
   try {
     const attractions = await Attraction.findAll();
+
+    // Vérification si des attractions ont été trouvées
+    if (!attractions || attractions.length === 0) {
+      return res.status(404).json({ success: false, message: "Aucune attraction trouvée." });
+    }
+
     res.render("attraction", { attractions });
   } catch (error) {
-    res.status(500).render("500");
+    
+    res.status(500).json({ success: false, message: "Erreur interne du serveur. Veuillez réessayer plus tard." });
   }
 };
 
-// Affiche les détails d'une attraction avec ses commentaires et likes
+// l'affichage des détails d'une attraction avec ses commentaires et likes
 exports.getAttractionDetails = async (req, res) => {
   const attractionId = req.params.id;
+  const userId = req.session.userId; // Récupérez userId de la session
 
   try {
-    // on Suppose qu'on récupérez userId à partir de la session
-    const userId = req.session.userId;
-
     const attraction = await Attraction.findByPk(attractionId, {
       include: [
         {
@@ -33,12 +38,29 @@ exports.getAttractionDetails = async (req, res) => {
       ],
     });
 
+    // Vérification si l'attraction existe
     if (!attraction) {
-      return res.status(404).render("404");
+      return res.status(404).json({ success: false, message: "Attraction non trouvée." });
     }
 
-    res.render("attractionDetail", { attraction, userId });
+    // Vérification si l'utilisateur a aimé cette attraction
+    const userLiked = userId ? await Like.findOne({
+      where: { user_id: userId, attraction_id: attractionId }
+    }) : false;
+
+    // Compter le nombre total de likes pour cette attraction
+    const likeCount = await Like.count({
+      where: { attraction_id: attractionId }
+    });
+
+    res.render("attractionDetail", {
+      attraction,
+      userId,
+      userLiked: !!userLiked,
+      likeCount
+    });
   } catch (error) {
-    res.status(500).render("500");
+   
+    res.status(500).json({ success: false, message: "Erreur interne du serveur. Veuillez réessayer plus tard." });
   }
 };

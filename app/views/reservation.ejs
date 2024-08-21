@@ -1,35 +1,105 @@
-<%- include('partials/header') %>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservation</title>
+    <link rel="stylesheet" href="/css/reservation.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <%- include('partials/header') %>
+    <div class="container mt-5">
+        <div class="form-container mx-auto">
+            <h1>Bienvenue à Zombieland ! </h1>
+   
+    <p>Pour réserver votre billet d'entrée au parc d'attraction Zombieland, veuillez remplir le formulaire ci-dessous en indiquant les
+         dates souhaitées ainsi que le nombre de places. Veuillez noter que chaque billet est valable pour une journée,
+         de 9h00 à 20h00, au tarif de 30 £ par personne. Un administrateur de notre parc prendra contact avec vous pour</p>
 
-<div id="reservation-page">
-    <p>Bienvenue à Zombieland !</p>
-    <p>Pour réserver votre billet d'entrée au parc d'attraction Zombieland, veuillez remplir le formulaire ci-dessous 
-    en indiquant les dates et les journées de votre choix dans la barre de message de réservation.
-    Un administrateur de notre parc prendra contact avec vous pour finaliser votre réservation.</p>
+   <h6>Formulaire de réservation :
+    <br>
+    <br>
 
-    <p>Formulaire de réservation :</p>
+            <form id="reservation-form" action="/reservation" method="POST">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nom Complet</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Nom complet" required>
+                </div>
+                <div class="mb-3">
+                    <label for="age" class="form-label">Âge</label>
+                    <input type="number" id="age" name="age" class="form-control" placeholder="Âge" required>
+                </div>
+                <div class="mb-3">
+                    <label for="recipientNumber" class="form-label">Numéro de Téléphone</label>
+                    <input type="text" id="recipientNumber" name="recipientNumber" class="form-control" placeholder="Numéro de téléphone" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Adresse E-mail</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Adresse e-mail" required>
+                </div>
+                <div class="mb-3">
+                    <label for="date" class="form-label">Date de Réservation</label>
+                    <input type="date" id="date" name="date" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="seats" class="form-label">Nombre de Places</label>
+                    <select id="seats" name="seats" class="form-select" required>
+                        <option value="" selected disabled>Choisissez le nombre de places</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="1">7</option>
+                        <option value="2">8</option>
+                        <option value="3">9</option>
+                        <option value="4">10</option>
+                        <option value="5">11</option>
+                        <option value="6">12</option>
+                        <option value="1">13</option>
+                        <option value="2">14</option>
+                        <option value="3">15</option>
+                        <option value="4">16</option>
+                        <option value="5">17</option>
+                        <option value="6">18</option>
+                        <option value="1">19</option>
+                        <option value="2">20</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea id="message" name="message" class="form-control" rows="4" placeholder="Message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Envoyer</button>
+            </form>
 
-    <form action="/reservation" method="POST">
-        <label for="Nom Complet">Nom Complet:</label>
-        <input type="text" id="name" name="name" required>
-
-        <label for="Âge">Âge:</label>
-        <input type="text" id="age" name="age">
-
-        <label for="Numéro de Téléphone">Numéro de Téléphone:</label>
-        <input type="text" id="recipientNumber" name="recipientNumber" required>
-
-        <label for="Adresse E-mail">Adresse E-mail:</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="message de réservation">Message:</label>
-        <textarea id="message" name="message" rows="4" required></textarea>
-
-        <input type="submit" value="Envoyer">
-    </form>
-
-    <div class="thank-you">
-        <p>Merci et à bientôt à Zombieland !</p>
+            <!-- Modal -->
+            <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="messageModalLabel">Réservation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="modal-message-body">
+                            <!-- Message content will be inserted here -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="modal-ok-button">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
-<%- include('partials/footer') %>
+    <%- include('partials/footer') %>
+
+    <script src="/js/reservation.js"></script>
+    <script src="/js/header.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

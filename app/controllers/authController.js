@@ -1,68 +1,235 @@
-require("dotenv").config();
-const { User } = require("../models");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+require('dotenv').config();
+const { User } = require('../models');
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+const { sendConfirmationEmail } = require('../config/serviceMail');
 
-// Inscription d'un nouvel utilisateur
-exports.register = async (req, res) => {
-  const { username, email, confirmEmail, password, confirmPassword } = req.body;
-
-  if (email !== confirmEmail) {
-    return res.status(400).render("emailTaken.ejs");
-  }
-
-  if (password !== confirmPassword) {
-    return res.status(400).render("passwordMismatch");
-  }
-
-  try {
-    const existingUser = await User.findOne({ where: { username } });
-    if (existingUser) {
-      return res.status(400).render("emailMismatch");
-    }
-
-    const existingEmail = await User.findOne({ where: { email } });
-    if (existingEmail) {
-      return res.status(400).render("usernameTaken");
-    }
-
-    const hash = await bcrypt.hash(password, 10);
-    await User.create({ username, email, password: hash });
-
-    res.redirect("/login");
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
+// Affichage la page de connexion
+exports.showLoginPage = (req, res) => {
+    
+    res.render('login', { 
+        message: res.locals.message || '', 
+        error: res.locals.error || false 
+    });
 };
 
-// Connexion de l'utilisateur
+// Affichage la page d'inscription
+exports.showRegisterPage = (req, res) => {
+   
+    res.render('register', {
+        message: res.locals.message || '',
+        error: res.locals.error || false,
+        username: req.cookies.username || '',
+        email: req.cookies.email || '',
+        confirmEmail: req.cookies.confirmEmail || ''
+    });
+};
+
+// Connexion
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+      
+      return res.render('login', {
+          message: 'Tous les champs sont requis.',
+          error: true
+      });
+  }
+
   try {
-    const user = await User.findOne({ where: { email } });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).render("401");
-    }
+      
 
-    req.session.userId = user.id; // Stocke l'ID de l'utilisateur dans la session
+      // Rechercher l'utilisateur par e-mail 
+      const user = await User.findOne({
+          where: { email: username } // Utilisation de  `email` 
+      });
 
-    const token = jwt.sign(
-      { id: user.id, username: user.username },
-      process.env.JWT_SECRET, // Utilise la clé JWT de l'environnement
-      {
-        expiresIn: "1h",
+      if (!user) {
+          
+          return res.render('login', {
+              message: 'Nom d\'utilisateur ou mot de passe incorrect.',
+              error: true
+          });
       }
-    );
-    res.cookie("token", token, { httpOnly: true });
-    res.redirect("/");
+
+      
+
+      // Comparation dee mot de passe fourni avec le hash stocké
+      const match = await bcrypt.compare(password, user.password);
+
+      if (!match) {
+          
+          return res.render('login', {
+              message: 'Nom d\'utilisateur ou mot de passe incorrect.',
+              error: true
+          });
+      }
+
+      // Vérification si l'utilisateur est confirmé
+      if (!user.confirmed) {
+        
+          return res.render('login', {
+              message: "Veuillez confirmer votre adresse e-mail avant de vous connecter.",
+              error: true
+          });
+      }
+
+      // Connexion réussie
+      req.session.userId = user.id;
+      req.session.username = user.username;
+
+
+      res.redirect('/');
+
   } catch (error) {
-    res.status(500).send(error.message);
+     
+      res.render('login', {
+          message: "Erreur du serveur. Veuillez réessayer plus tard.",
+          error: true
+      });
   }
 };
 
-// Fonction de déconnexion de l'utilisateur
+// Inscription
+exports.register = async (req, res) => {
+    const { username, email, confirmEmail, password, confirmPassword } = req.body;
+
+    if (!username || !email || !password || !confirmEmail || !confirmPassword) {
+      
+        return res.render('register', {
+            message: "Tous les champs sont requis.",
+            error: true,
+            username,
+            email,
+            confirmEmail
+        });
+    }
+
+    if (email !== confirmEmail || password !== confirmPassword) {
+     
+        return res.render('register', {
+            message: "Les adresses e-mail ou les mots de passe ne correspondent pas.",
+            error: true,
+            username,
+            email,
+            confirmEmail
+        });
+    }
+
+    const passwordStrength = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    if (!passwordStrength.test(password)) {
+       
+        return res.render('register', {
+            message: 'Le mot de passe doit comporter au moins 8 caractères, dont une majuscule, une minuscule, un chiffre et un symbole.',
+            error: true,
+            username,
+            email,
+            confirmEmail
+        });
+    }
+
+    try {
+       
+        const existingUser = await User.findOne({ where: { username } });
+        if (existingUser) {
+         
+            return res.render('register', {
+                message: "Le nom d'utilisateur est déjà pris.",
+                error: true,
+                username,
+                email,
+                confirmEmail
+            });
+        }
+
+        const existingEmail = await User.findOne({ where: { email } });
+        if (existingEmail) {
+           
+            return res.render('register', {
+                message: "L'adresse e-mail est déjà utilisée.",
+                error: true,
+                username,
+                email,
+                confirmEmail
+            });
+        }
+
+        const hash = await bcrypt.hash(password, 10);
+        const token = crypto.randomBytes(20).toString('hex');
+        const confirmationLink = `${process.env.BASE_URL}/confirm-email?token=${token}`;
+
+        await User.create({
+            username,
+            email,
+            password: hash,
+            confirmed: false,
+            confirmationToken: token
+        });
+
+     
+        await sendConfirmationEmail(email, confirmationLink);
+      
+
+        res.render('register', {
+            message: "Inscription réussie. Veuillez vérifier votre e-mail pour confirmer votre compte."
+        });
+
+    } catch (error) {
+     
+        res.render('register', {
+            message: "Erreur du serveur. Veuillez réessayer plus tard.",
+            error: true,
+            username,
+            email,
+            confirmEmail
+        });
+    }
+};
+
+// Déconnexion
 exports.logout = (req, res) => {
-  req.session.destroy(); // Détruit la session de l'utilisateur
-  res.clearCookie("token");
-  res.redirect("/");
+    req.session.destroy(err => {
+        if (err) {
+           
+            return res.redirect('/');  // Redirection vers la page d'accueil en cas d'erreur
+        }
+       
+        res.redirect('/login');
+    });
+};
+
+// Confirmation d'email
+
+exports.confirmEmail = async (req, res) => {
+    const { token } = req.query;
+
+    try {
+       
+        const user = await User.findOne({ where: { confirmationToken: token } });
+
+        if (!user) {
+           
+            return res.render('notification', { message: "Session exipré.", type: 'danger' });
+
+        }
+
+        // Vérifier si le token a expiré
+        const tokenExpiration = new Date(user.createdAt.getTime() + 3600000); // Supposons que le token expire après 1 heure
+        if (new Date() > tokenExpiration) {
+          
+            return res.render('notification', { message: "Session exipré.", type: 'danger' });
+        }
+
+        user.confirmed = true;
+        user.confirmationToken = null;
+        await user.save();
+
+       
+        res.render('notification', { message: "Votre compte a été confirmé avec succès. Vous pouvez maintenant vous connecter.", type: 'success' });
+
+    } catch (error) {
+       
+        res.render('notification', { message: "Erreur du serveur. Veuillez réessayer plus tard.", type: 'danger' });
+    }
 };

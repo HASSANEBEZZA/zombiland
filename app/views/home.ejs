@@ -1,26 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZombieLand</title>
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/poop-up-cookies.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <%- include('partials/header') %>
 
-<%- include('partials/header') %>
-<link rel="stylesheet" href="style.css">
-  <div class="content">
-    <audio autoplay loop class="hidden-audio">
-        <source src="bruit.mp3" type="audio/mp3">
-        
-    </audio>
-            <h2>ZombieLand</h2>
-            <h6> est bien plus qu'un simple parc 
-                d'attractions,<br> c'est une expérience terrifiante, palpitante 
-                et mémorable <br>qui plonge les visiteurs au cœur d'un 
-                univers post-apocalyptique où les zombies <br>règnent en 
-                maîtres. Conçu pour les amateurs d'horreur, <br>d'aventure 
-                et de frissons, ZombieLand est un lieu où l'imagination <br>
-                rencontre la réalité, offrant une expérience unique en <br>
-                son genre pour tous ceux qui osent y pénétrer. 
-                </h6>
-<div id="main-content">
-    <a href="/reservation" class="button">Réserver</a>
-    <a href="/register" class="button">Attraction</a>
-</div>
+    <div class="container my-4">
+        <div class="text-center mb-4">
+            <h2 id="title">ZombieLand</h2>
+            <h6 id="description">
+                Est bien plus qu'un simple parc d'attractions,<br> c'est une expérience terrifiante, palpitante 
+                et mémorable <br>qui plonge les visiteurs au cœur d'un univers post-apocalyptique où les zombies <br>
+                règnent en maîtres. Conçu pour les amateurs d'horreur, <br>d'aventure et de frissons, ZombieLand est un lieu 
+                où l'imagination rencontre la réalité, offrant une expérience unique en <br>son genre pour tous ceux qui 
+                osent y pénétrer.
+            </h6>
+            <div id="main-content" class="text-center">
+                <div class="buttons-container">
+                    <a href="/reservation" class="btn btn-success" id="reservation-button">Réserver</a>
+                    <a href="/attraction" class="btn btn-success" id="attraction-button">Attraction</a>
+                </div>
+                <div id="message-container"></div>
+            </div>
+            
+        </div>
+        <div class="shared-container text-center">
+            <div class="slideshow-container">
+                <div class="slideshow-wrapper">
+                    <div class="slideshow-item"><img src="/img/1.jpg" alt="Photo 1"></div>
+                    <div class="slideshow-item"><img src="/img/2.jpg" alt="Photo 2"></div>
+                    <div class="slideshow-item"><img src="/img/3.jpg" alt="Photo 3"></div>
+                    <div class="slideshow-item"><img src="/img/4.jpg" alt="Photo 4"></div>
+                </div>
+            </div>
+
+            <div class="welcome-text">
+                Bienvenue au parc d'attractions ZombieLand qui va ouvrir ses portes le 12/09/2024.
+            </div>
+        </div>
     </div>
-        
-<%- include('partials/footer') %>
 
+    <div id="cookie-popup" class="cookie-popup">
+        <div class="cookie-content">
+            <div class="cookie-image">
+                <img src="/img/cookies.png" alt="Cookies">
+            </div>
+            <div class="cookie-text">
+                <p>Ce site utilise des cookies pour améliorer votre expérience. Acceptez-vous l'utilisation des cookies ?</p>
+                <a href="/cokies" id="cookie-details" class="cookie-details-link">Détails</a>
+                <div class="cookie-buttons">
+                    <button id="accept-cookies" class="cookie-button accept">Accepter</button>
+                    <button id="decline-cookies" class="cookie-button decline">Refuser</button>
+                </div>
+            </div>
+        </div>
+        <span class="close-btn">&times;</span>
+    </div>
+
+    <%- include('partials/footer') %>
+    <script src="/js/header.js"></script>
+    <script src="/js/home.js"></script>
+</body>
+</html>

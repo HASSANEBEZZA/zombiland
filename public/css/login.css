@@ -1,0 +1,47 @@
+
+body {
+    padding-top: 20px; /* Espacer le contenu du haut */
+    padding-bottom: 20px; /* Espacer le contenu du bas */
+    background-color: #9487935d !important; /* Couleur de fond avec priorité */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Style pour la carte de connexion */
+.card {
+    border-radius: 12px; /* Coins arrondis pour un effet moderne */
+}
+
+.containerr {
+    background: rgba(255, 255, 255, 0.925)!important;
+}
+
+
+/* Style pour le formulaire de connexion */
+.login-form {
+    margin-top: 20px;
+}
+
+/* Style pour le bouton de connexion */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 50px; /* Coins arrondis pour le bouton */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+/* Style pour les messages */
+.alert {
+    border-radius: 8px; /* Coins arrondis pour les alertes */
+}
+
+/* Style pour le footer */
+footer {
+    background-color: #343a40; /* Couleur de fond sombre pour le footer */
+    color: #fff;
+}

@@ -1,6 +1,6 @@
 const { Comment } = require("../models");
 
-// Ajoute un commentaire à une attraction
+// l'ajoute d'un commentaire à une attraction
 exports.addComment = async (req, res) => {
   const { userId, attractionId, comment } = req.body;
   try {
@@ -11,7 +11,8 @@ exports.addComment = async (req, res) => {
     });
     res.redirect(`/attractionDetail/${attractionId}`);
   } catch (error) {
-    res.status(500).render("500");
+   
+    res.status(500).json({ success: false, message: "Erreur interne du serveur. Veuillez réessayer plus tard." });
   }
 };
 
@@ -22,13 +23,14 @@ exports.updateComment = async (req, res) => {
   try {
     const comment = await Comment.findByPk(commentId);
     if (!comment) {
-      return res.status(404).render("404");
+      return res.status(404).json({ success: false, message: "Commentaire non trouvé." });
     }
     comment.comment = commentText;
     await comment.save();
     res.redirect(`/attractionDetail/${comment.attraction_id}`);
   } catch (error) {
-    res.status(500).render("500");
+    
+    res.status(500).json({ success: false, message: "Erreur interne du serveur. Veuillez réessayer plus tard." });
   }
 };
 
@@ -38,11 +40,12 @@ exports.deleteComment = async (req, res) => {
   try {
     const comment = await Comment.findByPk(commentId);
     if (!comment) {
-      return res.status(404).render("404");
+      return res.status(404).json({ success: false, message: "Commentaire non trouvé." });
     }
     await comment.destroy();
     res.redirect(`/attractionDetail/${comment.attraction_id}`);
   } catch (error) {
-    res.status(500).render("500");
+   
+    res.status(500).json({ success: false, message: "Erreur interne du serveur. Veuillez réessayer plus tard." });
   }
 };

@@ -1,27 +1,25 @@
 const { Like } = require("../models");
 
-// Ajoute un like à une attraction
+// l'joute d'un like à une attraction
 exports.addLike = async (req, res) => {
   const { attractionId } = req.body;
-  const userId = req.user ? req.user.id : null;
+  const userId = req.session.userId;
 
-  console.log("addLike called", { userId, attractionId });
+;
 
   try {
-    // Vérifier si l'utilisateur est authentifié
+    // Vérification si l'utilisateur est authentifié
     if (!userId) {
       return res.status(401).json({ error: "User not authenticated" });
     }
 
-    // Vérifier si l'utilisateur a déjà aimé cette attraction
+    // Vérification si l'utilisateur a déjà aimé cette attraction
     const existingLike = await Like.findOne({
       where: { user_id: userId, attraction_id: attractionId },
     });
 
     if (existingLike) {
-      return res
-        .status(400)
-        .json({ error: "Vous avez déjà aimé cette attraction" });
+      return res.status(400).json({ error: "Vous avez déjà aimé cette attraction" });
     }
 
     // Créer un nouveau like
@@ -42,7 +40,7 @@ exports.addLike = async (req, res) => {
 // Supprime un like d'une attraction
 exports.deleteLike = async (req, res) => {
   const { attractionId } = req.body;
-  const userId = req.user ? req.user.id : null;
+  const userId = req.session.userId;
 
   try {
     // Vérifier si l'utilisateur est authentifié
@@ -77,7 +75,7 @@ exports.deleteLike = async (req, res) => {
 // Bascule un like (ajoute ou supprime) pour une attraction
 exports.toggleLike = async (req, res) => {
   const { attractionId } = req.body;
-  const userId = req.user ? req.user.id : null;
+  const userId = req.session.userId;
 
   try {
     // Vérifier si l'utilisateur est authentifié

@@ -1,0 +1,70 @@
+body {
+    background-color: #9487935d !important; /* Couleur de fond avec priorité */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* Conteneur principal pour la page "À propos" */
+.about-container {
+    max-width: 1000px;
+    margin: 40px auto; /* Centrer horizontalement avec un espace au-dessus */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    overflow: hidden; /* Pour éviter que le contenu dépasse les coins arrondis */
+}
+
+/* Contenu principal */
+.about-content {
+    margin: 0;
+}
+
+/* Style pour le titre principal */
+.about-content h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin: 20px 0;
+    text-align: center;
+    color: #333;
+}
+
+/* Style pour les sous-titres */
+.about-content h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 25px 0 10px;
+    color: #007bff;
+}
+
+/* Style pour les paragraphes */
+.about-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+/* Style pour les éléments de texte importants */
+.about-content strong {
+    font-weight: 600;
+}
+
+/* Réactivité */
+@media (max-width: 768px) {
+    .about-content h1 {
+        font-size: 2rem;
+    }
+
+    .about-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .about-content p {
+        font-size: 1rem;
+    }
+
+    .about-container {
+        padding: 15px;
+    }
+}

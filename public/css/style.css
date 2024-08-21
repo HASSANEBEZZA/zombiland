@@ -1,0 +1,173 @@
+body {
+    background-color: #99e4dd; 
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Style du header */
+.custom-header {
+    background-color: #10265ecb; /* Couleur de fond personnalisée */
+    padding: 10px 0;
+}
+
+/* Logo */
+.navbar-brand img {
+    height: 100px !important; /* Ajustement pour le logo */
+    width: 100px !important;
+}
+
+/* Styles pour le bouton hamburger */
+.navbar-toggler-icon {
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"%3E%3Cpath stroke="currentColor" stroke-width="3" d="M4 6h22M4 15h22M4 24h22" /%3E%3C/svg%3E');
+}
+
+/* Styles pour le menu de navigation */
+.navbar-nav {
+    display: flex;
+    justify-content: center; /* Centre le menu de navigation */
+    flex-grow: 1;
+}
+
+.navbar-nav .nav-item {
+    margin: 0 10px;
+}
+
+.navbar-nav .nav-link {
+    color: #e0e0e0; /* Couleur du texte */
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffffff;
+    background-color: #8f94ad;
+    box-shadow: 0 4px 8px rgba(224, 210, 210, 0.2);
+}
+
+/* Section utilisateur dans le header */
+.username-link {
+    color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    background-color: transparent;
+    cursor: default;
+}
+
+.username-link i {
+    font-size: 1.5em; /* Taille réduite de l'icône dans le header */
+}
+
+.username-link:hover {
+    color: #e0e0e0;
+}
+
+.logout-link {
+    color: #e0e0e0;
+}
+
+.logout-link:hover {
+    color: #ffffff;
+    background-color: #444;
+    border-radius: 20px;
+}
+
+/* Boutons de connexion et d'inscription */
+.navbar-nav .nav-item .nav-link.login-btn {
+    background-color: #54df2a1e;
+    color: #fff;
+    border: 2px solid #e9eef0;
+}
+
+.navbar-nav .nav-item .nav-link.login-btn:hover {
+    background-color: rgba(31, 65, 75, 0.2);
+    color: #61fbcd;
+}
+
+.navbar-nav .nav-item .nav-link.register-btn {
+    background-color: #54df2a1e;
+    color: #fff;
+    border: 2px solid #e9eef0;
+}
+
+.navbar-nav .nav-item .nav-link.register-btn:hover {
+    background-color: transparent;
+    color: #61fbcd;
+}
+
+/* Style du footer */
+.custom-footer {
+    background-color: #10265ecb; /* Couleur de fond du footer */
+    color: #e0e0e0; /* Couleur du texte par défaut */
+    padding: 20px 0; /* Espacement vertical */
+}
+
+/* Style pour les liens du footer */
+.custom-footer a {
+    color: #e0e0e0; /* Couleur du texte par défaut */
+    text-decoration: none; /* Enlever le soulignement */
+    transition: color 0.3s ease; /* Transition pour le changement de couleur */
+}
+
+.custom-footer a:hover {
+    color: #000000 !important; /* Couleur du texte au survol en noir avec !important pour surclasser les autres styles */
+}
+
+/* Style spécifique pour le lien de déconnexion pour ne pas changer au survol */
+.custom-footer .logout-link {
+    color: #030000; /* Couleur du texte par défaut */
+    text-decoration: none; /* Enlever le soulignement */
+}
+
+.custom-footer .logout-link:hover {
+    color: #0c0101 !important; /* Conserve la couleur du texte même au survol */
+    background-color: transparent !important; /* Assure qu'il n'y a pas de changement de fond */
+}
+
+/* Style pour le nom d'utilisateur dans le footer */
+.custom-footer .username-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Espacement entre l'icône et le nom d'utilisateur */
+    margin-bottom: 10px; /* Espacement sous le nom d'utilisateur */
+}
+
+.custom-footer .username-container i {
+    font-size: 1.5em; /* Taille de l'icône dans le footer */
+}
+
+/* Alignement mobile */
+@media (max-width: 768px) {
+    .navbar-collapse {
+        text-align: center;
+    }
+}
+
+.navbar-toggler {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(90deg, #0703eb, #004ef5);
+    color: white;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.navbar-toggler:hover {
+    background: linear-gradient(90deg, #001fe6, #0226d6);
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.navbar-toggler:active {
+    background-color: #0056b3;
+    transform: translateY(0);
+}

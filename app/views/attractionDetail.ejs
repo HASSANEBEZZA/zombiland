@@ -1,57 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Détails de l'Attraction</title>
+    <link rel="stylesheet" href="/css/attraction-detail.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    
 <%- include('partials/header') %>
 
-
-<div class="attraction-container">
-    <h2><%= attraction.name %></h2>
-    <p><strong>Category:</strong> <%= attraction.category %></p>
-    <div class="image-like-container">
-        <img class="attraction-image" src="<%= attraction.photo_url %>" alt="<%= attraction.name %>">
-        <div class="like-section">
-            <% if (userId) { %>
-                <button class="like-btn <%= attraction.userLiked ? 'liked' : '' %>" data-attraction-id="<%= attraction.id %>">
-                    <span class="heart <%= attraction.userLiked ? 'red-heart' : '' %>">&hearts;</span>
-                </button>
-            <% } else { %>
-                <p>Veuillez vous connecter pour aimer cette attraction.</p>
-            <% } %>
-            <span class="like-count" id="like-count"><%= attraction.AttractionLikes.length %></span>
+<main>
+    <div class="attraction-container">
+        <h2><%= attraction.name %></h2>
+        <p><strong>Catégorie:</strong> <%= attraction.category %></p>
+        <div class="image-like-container">
+            <img class="attraction-image" src="<%= attraction.photo_url %>" alt="<%= attraction.name %>">
+            <div class="like-section">
+                <% if (userId) { %>
+                    <button class="like-btn <%= userLiked ? 'liked' : '' %>" data-attraction-id="<%= attraction.id %>">
+                        <span class="heart <%= userLiked ? 'red-heart' : '' %>">&hearts;</span>
+                    </button>
+                <% } else { %>
+                    <li class="connecter"><a href="/login" >Veuillez vous connecter pour liké cette attraction</a></li>
+                <% } %>
+                <span class="like-count" id="like-count"><%= likeCount %></span>
+            </div>
         </div>
+        <p><%= attraction.description %></p>
+       <li class="reservation-link"><a href="/register" class="modern-button">Réservez votre billet d'entrée.</a></li>
     </div>
-    <p><%= attraction.description %></p>
-</div>
 
-<div class="comments-container">
-    <h3>Comments</h3>
-    <% attraction.Comments.forEach(comment => { %>
-        <div class="comment">
-            <p class="username"><%= comment.User.username %></p>
-            <p><%= comment.comment %></p>
-            <% if (comment.User.id === userId) { %>
-                <!-- Modifier le commentaire -->
-                <form action="/updateComment/<%= comment.id %>" method="POST">
-                    <input type="text" name="commentText" value="<%= comment.comment %>">
-                    <button type="submit">Modifier</button>
-                </form>
-                <!-- Supprimer le commentaire -->
-                <form action="/deleteComment/<%= comment.id %>" method="POST">
-                    <button type="submit">Supprimer</button>
-                </form>
-            <% } %>
-        </div>
-    <% }) %>
-
-    <!-- Ajouter un commentaire -->
-    <% if (userId) { %>
-        <form action="/addComment" method="POST">
-            <input type="hidden" name="userId" value="<%= userId %>">
-            <input type="hidden" name="attractionId" value="<%= attraction.id %>">
-            <textarea name="comment" rows="4" placeholder="Ajouter un commentaire"></textarea>
-            <button type="submit">Ajouter</button>
-        </form>
-    <% } else { %>
-        <p>Veuillez vous connecter pour ajouter un commentaire.</p>
-    <% } %>
-</div>
+    <div class="comments-container">
+        <h3>Commentaires</h3>
+        <% attraction.Comments.forEach(comment => { %>
+            <div class="comment">
+                <p class="username"><%= comment.User.username %></p>
+                <p><%= comment.comment %></p>
+                <% if (comment.User.id === userId) { %>
+                    <form action="/updateComment/<%= comment.id %>" method="POST">
+                        <input type="text" name="commentText" value="<%= comment.comment %>">
+                        <button type="submit" class="action-button edit-button">Modifier</button>
+                    </form>
+                    <form action="/deleteComment/<%= comment.id %>" method="POST">
+                        <button type="submit" class="action-button delete-button">Supprimer</button>
+                    </form>
+                <% } %>
+            </div>
+        <% }) %>
+        
+        <% if (userId) { %>
+            <form action="/addComment" method="POST" id="comment-form">
+                <input type="hidden" name="userId" value="<%= userId %>">
+                <input type="hidden" name="attractionId" value="<%= attraction.id %>">
+                <textarea name="comment" rows="4" placeholder="Ajouter un commentaire"></textarea>
+                <button type="submit" class="action-button add-button">Ajouter</button>
+            </form>
+        <% } else { %>
+            <li class="connecter" class="connectercomt"><a href="/login" >Veuillez vous connecter pour ajouter un commentaire</a></li> .</p>
+        <% } %>
+        
+    </div>
+</main>
 
 <%- include('partials/footer') %>
-
+<script src="/js/attraction-detail.js"></script>
+<script src="/js/header.js"></script>
+</body>
+</html>

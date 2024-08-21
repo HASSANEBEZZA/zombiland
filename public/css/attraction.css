@@ -1,0 +1,134 @@
+body {
+    background-color: #9487935d !important; /* Couleur de fond avec priorité */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+
+/* Styles pour le titre principal */
+.titre-attraction {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#main-title {
+    font-size: 2.5em;
+    color: #333;
+    margin: 0;
+}
+
+/* Styles pour la liste des attractions */
+.attractions-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Quatre colonnes sur grands écrans */
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Styles pour chaque attraction */
+.attraction {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.attraction:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.image-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.attraction:hover .image-container img {
+    transform: scale(1.1);
+}
+
+h2 {
+    font-size: 1.5em; /* Taille du titre d'attraction */
+    margin: 10px;
+    color: #111111; /* Couleur noir pour le titre */
+    text-align: center; /* Centrer le titre */
+    text-decoration: none; /* Assurer que le texte n'est pas souligné */
+}
+
+p {
+    font-size: 1em;
+    margin: 10px;
+    color: #666;
+}
+
+/* Styles pour le bouton "Retour en haut" */
+#back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#back-to-top:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .attractions-list {
+        grid-template-columns: 1fr; /* Une seule colonne par ligne pour les écrans plus petits */
+    }
+
+    .image-container {
+        height: 200px; /* Ajuste la hauteur de l'image pour les petits écrans */
+    }
+}
+
+@media (max-width: 480px) {
+    .attractions-list {
+        grid-template-columns: 1fr; /* Une seule colonne par ligne pour les très petits écrans */
+        gap: 15px; /* Réduire l'espace entre les cartes d'attraction */
+    }
+
+    .attraction {
+        margin: 10px 0; /* Réduire la marge entre les cartes pour les petits écrans */
+        padding: 10px; /* Ajouter un padding pour les cartes sur petits écrans */
+    }
+
+    .image-container {
+        height: 20px; /* Augmente la hauteur de l'image pour les très petits écrans */
+    }
+
+    h2 {
+        font-size: 1.2em; /* Réduire la taille du titre sur les petits écrans */
+    }
+
+    p {
+        font-size: 0.9em; /* Réduire la taille du texte de la catégorie */
+    }
+
+    #main-title {
+        font-size: 2em; /* Réduction de la taille du titre principal pour les petits écrans */
+    }
+}

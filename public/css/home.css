@@ -1,0 +1,289 @@
+body {
+    background-color: #9487935d !important; /* Couleur de fond avec priorité */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+
+/* Titre de la page */
+#title {
+    font-size: 3rem; /* Taille du titre */
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+/* Description sous le titre */
+#description {
+    font-size: 1.2rem; /* Taille de la description */
+    text-align: center;
+    margin-bottom: 30px;
+    line-height: 1.6; /* Espacement des lignes */
+}
+
+/* Conteneur principal pour les boutons */
+#main-content {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Espacement entre les boutons */
+    margin-bottom: 50px; /* Espace entre les boutons et le footer sur les écrans larges */
+}
+
+/* Boutons */
+#reservation-button, #attraction-button {
+    background-color: #4CAF50 !important; /* Couleur de fond des boutons */
+    color: white;
+    border: none;
+    padding: 15px 30px; /* Taille des boutons */
+    font-size: 1.2rem;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+}
+
+#reservation-button:hover, #attraction-button:hover {
+    background-color: #45a049 !important; /* Couleur au survol */
+}
+
+#main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center; /* Centre les boutons horizontalement */
+    gap: 10px; /* Espace entre les boutons */
+}
+
+#main-content .btn {
+    padding: 8px 16px; /* Réduire la taille des boutons */
+    font-size: 14px; /* Réduire la taille du texte dans les boutons */
+}
+
+#message-container {
+    margin-top: 10px; /* Espace entre les boutons et le message */
+}
+
+
+
+
+
+
+
+
+
+
+/* Cadre partagé pour le diaporama et le texte */
+.shared-container {
+    position: relative;
+    max-width: 500px;
+    height: 350px; /* Hauteur ajustée pour inclure à la fois les photos et le texte */
+    margin: auto;
+    overflow: hidden;
+  
+
+}
+
+/* Slideshow dans le cadre partagé */
+.slideshow-container {
+    position: relative;
+    width: 100%;
+    height: 75%; /* Prend 75% de la hauteur totale */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slideshow-wrapper {
+    display: flex;
+    width: 400%;
+    height: 100%;
+    transition: transform 1s ease-in-out;
+}
+
+.slideshow-item {
+    min-width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slideshow-item img {
+    box-sizing: 15px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* S'assure que les images ne sont pas étirées */
+}
+
+/* Texte d'accueil dans le cadre partagé */
+.welcome-text {
+    width: 100%;
+    height: 25%; /* Prend 25% de la hauteur totale */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Roboto', sans-serif; /* Style d'écriture moderne */
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    animation: slide-left 10s linear infinite;
+    white-space: nowrap; /* Empêche le texte de se diviser en plusieurs lignes */
+}
+
+/* Animation de défilement du texte */
+@keyframes slide-left {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+/* Ajoutez une police moderne */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+
+
+
+
+
+
+
+
+
+
+/* Styles pour la pop-up de cookies */
+.cookie-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centre horizontalement et verticalement */
+    background-color: rgba(0, 0, 0, 0.8); /* Fond sombre avec transparence */
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 10000; /* Assure que la pop-up est au-dessus de tout autre contenu */
+    width: 90%; /* Largeur maximale pour éviter que la pop-up ne devienne trop large */
+    max-width: 500px; /* Largeur maximale pour garder la pop-up cohérente */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Ajoute une ombre pour plus de visibilité */
+    text-align: center;
+    box-sizing: border-box; /* Assure que le padding est inclus dans la largeur totale */
+    /* Flexbox centering for older browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Contenu de la pop-up */
+.cookie-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Image des cookies */
+.cookie-image img {
+    width: 120px; /* Taille de l'image ajustée pour être responsive */
+    height: auto;
+    margin-bottom: 15px;
+}
+
+/* Texte des cookies */
+.cookie-text p {
+    font-size: 14px; /* Taille de police ajustée pour être plus lisible sur les petits écrans */
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+/* Conteneur des boutons */
+.cookie-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espace entre les boutons */
+    width: 100%;
+}
+
+/* Boutons de cookies */
+.cookie-button {
+    background-color: #4CAF50; /* Couleur de fond des boutons */
+    color: white;
+    border: none;
+    padding: 12px; /* Taille des boutons ajustée pour être plus uniforme */
+    text-align: center;
+    font-size: 14px; /* Taille de police ajustée */
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Boutons s'étendent sur toute la largeur disponible */
+    max-width: 200px; /* Largeur maximale pour éviter que les boutons ne deviennent trop larges */
+    margin: 0 auto; /* Centrer les boutons horizontalement */
+}
+
+.cookie-button:hover {
+    background-color: #45a049; /* Couleur au survol */
+}
+
+/* Bouton de refus */
+.cookie-button.decline {
+    background-color: #f44336; /* Couleur de refus */
+}
+
+.cookie-button.decline:hover {
+    background-color: #e53935; /* Couleur au survol pour refuser */
+}
+
+/* Bouton de fermeture */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px; /* Ajusté pour un meilleur placement */
+    font-size: 22px; /* Taille légèrement plus grande pour plus de visibilité */
+    cursor: pointer;
+    color: #fff;
+    transition: color 0.3s ease; /* Transition pour la couleur de survol */
+}
+
+.close-btn:hover {
+    color: #f44336; /* Couleur rouge au survol pour le bouton de fermeture */
+}
+
+/* Styles responsive pour petits écrans */
+@media (max-width: 480px) {
+    #title {
+        font-size: 2rem; /* Taille du titre ajustée pour petits écrans */
+    }
+
+    #description {
+        font-size: 1rem; /* Taille de la description ajustée pour petits écrans */
+    }
+
+    .cookie-popup {
+        width: 90%; /* Réduit la largeur pour les petits écrans */
+        padding: 15px; /* Réduit le padding pour mieux s'adapter aux petits écrans */
+    }
+
+    .cookie-image img {
+        width: 100px; /* Réduit la taille de l'image */
+    }
+
+    .cookie-text p {
+        font-size: 12px; /* Réduit la taille de la police pour les petits écrans */
+    }
+
+    .cookie-button {
+        font-size: 12px; /* Réduit la taille de la police des boutons */
+        padding: 10px; /* Ajuste le padding des boutons */
+    }
+
+    /* Ajouter un espace entre les boutons et le footer sur petits écrans */
+    #main-content {
+        margin-bottom: 20px; /* Espace entre les boutons et le footer */
+    }
+}

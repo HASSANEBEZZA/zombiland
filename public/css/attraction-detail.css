@@ -1,0 +1,267 @@
+body {
+    background-color: #9487935d !important; /* Couleur de fond avec priorité */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* Conteneur de l'attraction */
+.attraction-container {
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding: 30px;
+    max-width: 900px; /* Limite la largeur du conteneur sur les grands écrans */
+    text-align: center;
+}
+
+/* Image de l'attraction */
+.attraction-image {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+}
+
+.connecter{
+    color: #007bff;
+    font-size: larger;
+    list-style-type: none;
+    padding-left: 0;
+
+}
+/* Style général pour les boutons de like */
+.like-btn {
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #ccc;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.like-btn.liked .heart {
+    color: #ff1744; /* Couleur rouge foncé quand le like est actif */
+}
+
+/* Style pour le compteur de likes */
+.like-count {
+    margin-left: 15px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Style pour la section de like */
+.like-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    font-size: 1.5em; /* Augmente la taille du cœur */
+}
+
+/* Style pour le cœur */
+.heart {
+    color: #ccc; /* Couleur par défaut du cœur */
+    transition: color 0.3s ease;
+    font-size: 1em; /* Augmente la taille du cœur */
+}
+
+/* Commentaires */
+.comments-container {
+    background: #f9f9fb;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding: 30px;
+    max-width: 900px;
+}
+
+/* Style des commentaires */
+.comment {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+}
+
+.comment:last-child {
+    border-bottom: none;
+}
+
+.username {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 1.2em;
+}
+
+/* Formulaire de commentaire */
+#comment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+textarea {
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    resize: vertical;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+textarea:focus {
+    border: 1px solid #007bff;
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.2);
+}
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(90deg, #007bff, #00c6ff);
+    color: white;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background: linear-gradient(90deg, #00c6ff, #007bff);
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+button:active {
+    background-color: #0056b3;
+    transform: translateY(0);
+}
+
+/* Supprime le point devant le <li> */
+.reservation-link {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/* Style  pour les bouton */
+
+.modern-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: linear-gradient(90deg, #007BFF, #00C6FF); 
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    border-radius: 30px; 
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); 
+    transition: all 0.3s ease;
+}
+
+/* Effet au survol */
+.modern-button:hover {
+    background: linear-gradient(90deg, #00C6FF, #007BFF); 
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6); 
+    transform: translateY(-2px); 
+}
+
+/* Effet au clic */
+.modern-button:active {
+    background: #0062cc; /* Couleur plus foncée au clic */
+    box-shadow: 0 3px 10px rgba(0, 123, 255, 0.3); 
+    transform: translateY(0); /* Repositionne le bouton */
+}
+
+/* Styles pour les boutons d'action (Modifier, Supprimer, Ajouter) */
+.action-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px; /* Bords très arrondis */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px; /* Espace entre les boutons */
+    transition: all 0.3s ease; /* Transition douce pour les effets */
+}
+
+/* Bouton Modifier */
+.edit-button {
+    background: linear-gradient(90deg, #17e74b, #5ac8fa); /* Dégradé vert à bleu clair */
+}
+
+.edit-button:hover {
+    background: linear-gradient(90deg, #5ac8fa, #34c759); 
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 20px rgba(52, 199, 89, 0.5); 
+}
+
+.edit-button:active {
+    background-color: #28a745; 
+    transform: translateY(0); /* Repositionne le bouton */
+}
+
+/* Bouton Supprimer */
+.delete-button {
+    background: linear-gradient(90deg, #b90e05, #e01e1e); 
+}
+
+.delete-button:hover {
+    background: linear-gradient(90deg, #d83838, #da1107); 
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 20px rgba(255, 59, 48, 0.5); 
+}
+
+.delete-button:active {
+    background-color: #c82333; /* Couleur plus foncée au clic */
+    transform: translateY(0); /* Repositionne le bouton */
+}
+
+/* Bouton Ajouter */
+.add-button {
+    background: linear-gradient(90deg, #007bff, #00c6ff);
+    margin-top: 10px;
+    width: 150px;
+}
+
+.add-button:hover {
+    background: linear-gradient(90deg, #00c6ff, #007bff); /* Inverse le dégradé */
+    transform: translateY(-2px); /* Légère montée au survol */
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5); /* Ombre plus intense */
+}
+
+.add-button:active {
+    background-color: #0056b3; /* Couleur plus foncée au clic */
+    transform: translateY(0); /* Repositionne le bouton */
+}
+
+/* Réglage pour les écrans plus larges */
+@media (min-width: 1024px) {
+    .attraction-container {
+        padding: 40px; /* Augmente le padding sur les grands écrans */
+    }
+
+    .attraction-image {
+        height: 350px; /* Ajuste la hauteur de l'image sur les grands écrans */
+    }
+
+    .like-section {
+        margin-top: 30px; /* Augmente l'espacement au-dessus de la section de like */
+    }
+
+    .comments-container {
+        padding: 40px; /* Augmente le padding du conteneur des commentaires */
+    }
+
+    textarea {
+        font-size: 1.2em; /* Augmente la taille de la police de l'élément textarea */
+    }
+
+    button {
+        font-size: 1.2em; /* Augmente la taille de la police des boutons */
+    }
+}

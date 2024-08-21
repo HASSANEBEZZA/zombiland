@@ -1,0 +1,41 @@
+
+
+body {
+    background-color: #9487935d !important; /* Couleur de fond avec priorité */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.content {
+    flex: 1;
+}
+
+.footer {
+    margin-top: auto;
+}
+/* Styles pour la page de notification */
+
+.alert {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.btn-primary {
+    font-size: 1.1rem;
+}
+/* Style pour le footer */
+
+.footer {
+    background-color: #343a40;
+    color: #ffffff;
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.btn-primary { margin-bottom:430px ;
+
+}

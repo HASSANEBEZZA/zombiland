@@ -1,0 +1,88 @@
+body {
+    background-color: #9487935d !important; /* Couleur de fond avec priorité */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#privacy-policy-page {
+    font-family: 'Roboto', sans-serif;
+    color: #444;
+    line-height: 1.6;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+/* Titre principal */
+#privacy-policy-page h1 {
+    font-size: 2.5em;
+    color: #34495e;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 10px;
+}
+
+/* Titres des sections */
+#privacy-policy-page h2 {
+    font-size: 1.8em;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #3498db;
+}
+
+/* Paragraphes */
+#privacy-policy-page p {
+    font-size: 1em;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+/* Listes */
+#privacy-policy-page ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+#privacy-policy-page ul li {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+/* Mettez en avant les informations importantes */
+#privacy-policy-page strong {
+    color: #2980b9;
+    font-weight: bold;
+}
+
+/* Lien hypertexte */
+#privacy-policy-page a {
+    color: #e74c3c;
+    text-decoration: none;
+}
+
+#privacy-policy-page a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #privacy-policy-page {
+        padding: 15px;
+        font-size: 0.9em;
+    }
+
+    #privacy-policy-page h1 {
+        font-size: 2em;
+    }
+
+    #privacy-policy-page h2 {
+        font-size: 1.5em;
+    }
+}

@@ -1,12 +1,20 @@
-// Importez la fonction sendEmail depuis le fichier mailer.js
-const { sendEmail } = require("../config/mailer");
+// Import de la  la fonction sendEmail depuis le fichier mailer.js
 const path = require("path");
+const { Attraction } = require('../models'); 
 
 class StaticController {
   // Méthode pour rendre la page d'accueil
-  homePage(req, res) {
-    // Rendu de la vue "home"
-    res.render("home");
+  async homePage(req, res) {
+    try {
+      // Récupérez toutes les attractions avec leurs images
+      const attractions = await Attraction.findAll();
+      
+      // Passez les données des attractions à la vue
+      res.render('home', { attractions });
+    } catch (error) {
+
+      res.status(500).send("Erreur serveur");
+    }
   }
 
   // Méthode pour rendre la page de connexion
@@ -33,37 +41,13 @@ class StaticController {
     res.render("legal");
   }
 
-  // Méthode pour rendre la page de contact
-  contactPage(req, res) {
-    // Rendu de la vue "contact"
-    res.render("reservation");
-  }
+// page a propos 
+aboutPage = (req, res) => {
+  res.render('apropos');
+};
 
-  // Méthode pour soumettre le formulaire de reservations
-  async submitContactForm(req, res) {
-    const { name, age, recipientNumber, email, message } = req.body;
 
-    try {
-      // Appel à la fonction sendEmail avec les données du formulaire
-      const emailSent = await sendEmail(
-        name,
-        email,
-        message,
-        age,
-        recipientNumber
-      );
-
-      if (emailSent) {
-        // Rendre la page de succès
-        res.render("message", { name }); // 'message' est le nom du fichier EJS sans extension
-      } else {
-        throw new Error("Échec de l'envoi de l'e-mail");
-      }
-    } catch (error) {
-      // Rendre la page d'erreur
-      res.status(500).render("404");
-    }
-  }
+ 
 }
 
 // Exportez une instance de votre contrôleur

@@ -1,68 +1,72 @@
 const express = require("express");
 const router = express.Router();
+
+// Importer les contrôleurs
 const attractionController = require("../app/controllers/attractionController");
 const authController = require("../app/controllers/authController");
 const staticController = require("../app/controllers/staticController");
 const commentController = require("../app/controllers/commentController");
 const likeController = require("../app/controllers/likeController");
-const authMiddleware = require("../app/authMiddleware");
-const mailController = require("../app/controllers/mailController");
+const passwordController = require("../app/controllers/passwordController");
+const authMiddleware = require('../app/authMiddleware');
+const reservationController = require('../app/controllers/reservationController');
 
-// Middleware d'authentification pour toutes les routes
-router.use(authMiddleware);
 
-// Page d'accueil
+
+// Routes statiques
 router.get("/", staticController.homePage);
-
-// Page de réservation
-router.get("/reservation", staticController.contactPage);
-router.post("/reservation", staticController.submitContactForm);
-
-// Page de confidentialité
 router.get("/privacy", staticController.privacyPage);
-
-// Page mention légale
 router.get("/legal", staticController.legalPage);
 
-// Page des attractions
-router.get("/attraction", attractionController.getAttractions);
 
-// Détails d'une attraction
+// Afficher la page de réservation
+router.get('/reservation', reservationController.showReservationPage);
+
+//  le formulaire de réservation
+router.post('/reservation', reservationController.handleReservation);
+
+module.exports = router;
+
+
+
+// Route pour la page "À propos"
+router.get('/apropos', staticController.aboutPage);
+router.get('/cokies', (req, res) => res.render('cokies'));
+
+// Routes attractions
+router.get("/attraction", attractionController.getAttractions);
 router.get("/attractionDetail/:id", attractionController.getAttractionDetails);
 
-// Routes pour les commentaires
-router.post("/addComment", commentController.addComment);
-router.post("/updateComment/:id", commentController.updateComment);
-router.post("/deleteComment/:id", commentController.deleteComment);
+// Routes commentaires (avec authentification)
+router.post("/addComment", authMiddleware, commentController.addComment);
+router.post("/updateComment/:id", authMiddleware, commentController.updateComment);
+router.post("/deleteComment/:id", authMiddleware, commentController.deleteComment);
 
-// Route pour ajouter les likes
-router.post("/addLike", likeController.addLike);
-// Route pour supprimer les likes
-router.post("/deleteLike", likeController.deleteLike);
-// Route pour basculer les likes
-router.post("/toggleLike", likeController.toggleLike);
+// Routes likes (avec authentification)
+router.post("/addLike", authMiddleware, likeController.addLike);
+router.post("/deleteLike", authMiddleware, likeController.deleteLike);
+router.post("/toggleLike", authMiddleware, likeController.toggleLike);
 
-// Page de connexion
-router.get("/login", (req, res) => res.render("login"));
+// Routes d'authentification
+router.get("/login", authController.showLoginPage);
 router.post("/login", authController.login);
 
-// Page d'inscription
-router.get("/register", (req, res) => res.render("register"));
+router.get("/register", authController.showRegisterPage);
 router.post("/register", authController.register);
 
-// Déconnexion
 router.get("/logout", authController.logout);
 
-// Afficher le formulaire de récupération de mot de passe
-router.get("/forgot-password", mailController.showForgotPasswordForm);
+// Réinitialisation de mot de passe
+router.get("/request-reset", passwordController.showRequestResetPage);
+router.post("/request-reset", passwordController.requestPasswordReset);
 
-// Gérer la soumission de l'email pour la récupération de mot de passe
-router.post("/forgot-password", mailController.handleForgotPassword);
+// Routes modifiées pour réinitialisation de mot de passe
+router.get("/change-password", passwordController.showChangePasswordPage);
+router.post("/change-password", passwordController.resetPassword);
 
-// Afficher le formulaire de réinitialisation de mot de passe
-router.get("/reset-password/:token", mailController.showResetPasswordForm);
+router.get('/notification', passwordController.showNotificationPage);
 
-// Gérer la réinitialisation de mot de passe
-router.post("/reset-password/:token", mailController.handleResetPassword);
+// Confirmation de l'email
+router.get("/confirm-email", authController.confirmEmail);
 
 module.exports = router;

@@ -1,36 +1,56 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - Parc d'Attraction</title>
-    <link rel="stylesheet" href="/style.css">
-</head>
-<body>
-    <header class="header">
-        <nav class="navbar">
-            <img src="./logo.jpg" alt="Logo" class="logo">
-            <ul class="navbar-list">
-                <li class="navbar-item"><a href="/" class="navbar-link">Accueil</a></li>
-                <li class="navbar-item"><a href="/attraction" class="navbar-link">Attraction</a></li>
-                <li class="navbar-item"><a href="/reservation" class="navbar-link">Réservation</a></li>
+<header class="custom-header">
+    <nav class="navbar navbar-expand-lg container">
+        <!-- Logo à gauche -->
+        <a class="navbar-brand" href="/">
+            <img src="/img/logo.jpg" alt="Logo" class="rounded-circle" style="height: 70px; width: 70px;">
+        </a>
+
+        <!-- Bouton de navigation en mode mobile, placé à droite -->
+        <button class="navbar-toggler" type="button" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" id="navbarToggle">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Menu de navigation -->
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/attraction">Attraction</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/reservation">Réservation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/apropos">À propos</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Section utilisateur à droite -->
+        <div class="collapse navbar-collapse justify-content-end" id="userNav">
+            <ul class="navbar-nav">
                 <% if (currentUser) { %>
-                    <li class="navbar-item navbar-profile">
-                        <span class="navbar-link">
-                            <i class="fas fa-user-circle profile-icon"> Mon compte:</i>
+                    <li class="nav-item">
+                        <a class="nav-link username-link d-flex align-items-center" href="#">
+                            <i class="fas fa-user-circle me-2"></i>
                             <%= currentUser.username %>
-                        </span>
+                        </a>
                     </li>
-                    <li class="navbar-item"><a href="/logout" class="navbar-link">Déconnexion</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link logout-link" href="/logout">Déconnexion</a>
+                    </li>
                 <% } else { %>
-                    <li class="navbar-item navbar-right">
-                        <a href="/login" class="navbar-link">Se connecter</a>
-                        <a href="/register" class="navbar-link">S'inscrire</a>
+                    <li class="nav-item">
+                        <a class="nav-link login-btn" href="/login">Se connecter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link register-btn" href="/register">S'inscrire</a>
                     </li>
                 <% } %>
             </ul>
-        </nav>   
-    </header>
-    <script src="/app.js"></script>
-</body>
-</html>
+        </div>
+    </nav>
+</header>
+<script src="header.js"></script>
