@@ -18,7 +18,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// Configuration de la session
 const sessionSecret = process.env.SESSION_SECRET || 'default-secret';
+const isProduction = process.env.NODE_ENV === 'production';
 
 // Middleware pour la gestion des sessions avec Redis
 app.use(
@@ -28,7 +30,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: process.env.NODE_ENV === 'production', 
+      secure: isProduction, 
       httpOnly: true,
       maxAge: 3600000, // 1 heure
       sameSite: 'Strict'
@@ -55,7 +57,6 @@ app.use((req, res, next) => {
   if (!req.session) {
     return next(new Error('Session non initialisée'));
   }
-  
   next();
 });
 
@@ -78,16 +79,16 @@ app.use('/', routes);
 sequelize
   .authenticate()
   .then(() => {
-    
+    console.log('Connection to the database has been established successfully.');
   })
   .catch((err) => {
-    
+    console.error('Unable to connect to the database:', err);
   });
 
 // Gestion des erreurs
 app.use((err, req, res, next) => {
+  console.error(err.stack); // Log l'erreur pour le débogage
 
- 
   res.status(err.status || 500).json({
     success: false,
     message: err.message || 'Erreur du serveur. Veuillez réessayer plus tard.',
@@ -97,5 +98,5 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  
+  console.log(`Server is running on port ${PORT}`);
 });
