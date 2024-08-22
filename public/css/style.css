@@ -153,7 +153,7 @@ body {
     padding: 12px 20px;
     border: none;
     border-radius: 30px;
-    background: linear-gradient(90deg, #0703eb, #004ef5);
+    background: linear-gradient(90deg, #198fc5bd, #19a4c7c4);
     color: white;
     font-size: 1.1em;
     font-weight: bold;
@@ -162,8 +162,8 @@ body {
 }
 
 .navbar-toggler:hover {
-    background: linear-gradient(90deg, #001fe6, #0226d6);
-    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.5);
+    background: linear-gradient(90deg, #4b5492, #4b578f);
+    box-shadow: 0 6px 15px rgba(10, 92, 179, 0.5);
     transform: translateY(-2px);
 }
 
