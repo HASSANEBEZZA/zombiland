@@ -1,19 +1,23 @@
-// On importe le module Sequelize
-const { Sequelize } = require("sequelize");
-// On importe le module dotenv pour la gestion des variables d'environnement
-const dotenv = require("dotenv");
+const { Sequelize } = require('sequelize');
 
-// Charger les variables d'environnement à partir d'un fichier .env
-dotenv.config();
+const sequelize = new Sequelize(
+    process.env.DB_NAME,           // Nom de la base de données
+    process.env.DB_USER,           // Nom d'utilisateur
+    process.env.DB_PASSWORD,       // Mot de passe
+    {
+        host: process.env.DB_HOST, // Hôte de la base de données
+        port: process.env.DB_PORT, // Port de la base de données
+        dialect: 'postgres',       // Type de base de données
+        logging: false,
+    }
+);
 
-// Création d'une instance Sequelize
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
- 
-  dialect: "postgres",
-  protocol: "postgres",
-  logging: false
- 
-});
+sequelize.authenticate()
+    .then(() => {
+       
+    })
+    .catch(err => {
+        console.error('Impossible de se connecter à la base de données:', err);
+    });
 
-// Export de notre client sequelize
 module.exports = sequelize;
