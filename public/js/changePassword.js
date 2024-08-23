@@ -1,26 +1,23 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const messageContainer = document.getElementById('message-container');
-    const loginButtonContainer = document.getElementById('login-button-container');
 
-    // Fonction pour lire les cookies
-    function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fonction pour afficher les messages
+        function showMessage(type, message) {
+            const messageContainer = document.getElementById('message-container');
+            if (message) {
+                messageContainer.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+                // Afficher le message pendant 5 secondes
+                setTimeout(function() {
+                    messageContainer.innerHTML = '';
+                }, 5000);
+            }
+        }
 
-    // Lire les cookies pour les messages
-    const successMessage = getCookie('message');
-    const errorMessage = getCookie('error');
+        // Récupérer les messages de l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('message');
+        const type = urlParams.get('type') || 'error'; // Définir 'error' comme type par défaut
 
-    if (successMessage) {
-        messageContainer.innerHTML = `<div class="alert alert-success">${successMessage}</div>`;
-        loginButtonContainer.style.display = 'block'; // Afficher le bouton de connexion
-        document.cookie = "message=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Effacer le cookie après l'affichage
-    }
-
-    if (errorMessage) {
-        messageContainer.innerHTML = `<div class="alert alert-danger">${errorMessage}</div>`;
-        document.cookie = "error=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Effacer le cookie après l'affichage
-    }
-});
+        if (message) {
+            showMessage(type, message);
+        }
+    });
