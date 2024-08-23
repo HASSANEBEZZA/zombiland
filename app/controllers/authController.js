@@ -96,7 +96,6 @@ exports.register = async (req, res) => {
     const { username, email, confirmEmail, password, confirmPassword } = req.body;
 
     if (!username || !email || !password || !confirmEmail || !confirmPassword) {
-      
         return res.render('register', {
             message: "Tous les champs sont requis.",
             error: true,
@@ -106,10 +105,19 @@ exports.register = async (req, res) => {
         });
     }
 
-    if (email !== confirmEmail || password !== confirmPassword) {
-     
+    if (email !== confirmEmail) {
         return res.render('register', {
-            message: "Les adresses e-mail ou les mots de passe ne correspondent pas.",
+            message: "Les adresses e-mail ne correspondent pas.",
+            error: true,
+            username,
+            email,
+            confirmEmail
+        });
+    }
+
+    if (password !== confirmPassword) {
+        return res.render('register', {
+            message: "Les mots de passe ne correspondent pas.",
             error: true,
             username,
             email,
@@ -119,7 +127,6 @@ exports.register = async (req, res) => {
 
     const passwordStrength = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     if (!passwordStrength.test(password)) {
-       
         return res.render('register', {
             message: 'Le mot de passe doit comporter au moins 8 caractères, dont une majuscule, une minuscule, un chiffre et un symbole.',
             error: true,
@@ -130,10 +137,8 @@ exports.register = async (req, res) => {
     }
 
     try {
-       
         const existingUser = await User.findOne({ where: { username } });
         if (existingUser) {
-         
             return res.render('register', {
                 message: "Le nom d'utilisateur est déjà pris.",
                 error: true,
@@ -145,7 +150,6 @@ exports.register = async (req, res) => {
 
         const existingEmail = await User.findOne({ where: { email } });
         if (existingEmail) {
-           
             return res.render('register', {
                 message: "L'adresse e-mail est déjà utilisée.",
                 error: true,
@@ -167,16 +171,13 @@ exports.register = async (req, res) => {
             confirmationToken: token
         });
 
-     
         await sendConfirmationEmail(email, confirmationLink);
-      
 
         res.render('register', {
-            message: "Inscription réussie. Veuillez vérifier votre e-mail pour confirmer votre compte."
+            message: "Finalisez votre inscription, un e-mail de vous être envoyé : pour finaliser votre inscription, rendez-vous dans votre boîte e-mail pour activer votre compte."
         });
 
     } catch (error) {
-     
         res.render('register', {
             message: "Erreur du serveur. Veuillez réessayer plus tard.",
             error: true,

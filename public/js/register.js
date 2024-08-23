@@ -20,28 +20,24 @@ document.addEventListener('DOMContentLoaded', function () {
     form.addEventListener('submit', function (e) {
         errorMessage.style.display = 'none';
 
-        // Vérification des champs vides
         if (!usernameInput.value || !emailInput.value || !confirmEmailInput.value || !passwordInput.value || !confirmPasswordInput.value) {
             showError('Tous les champs sont requis.');
             e.preventDefault();
             return;
         }
 
-        // Vérification des emails correspondants
         if (emailInput.value !== confirmEmailInput.value) {
             showError('Les adresses e-mail ne correspondent pas.');
             e.preventDefault();
             return;
         }
 
-        // Vérification des mots de passe correspondants
         if (passwordInput.value !== confirmPasswordInput.value) {
             showError('Les mots de passe ne correspondent pas.');
             e.preventDefault();
             return;
         }
 
-        // Validation de la force du mot de passe
         const passwordStrength = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
         if (!passwordStrength.test(passwordInput.value)) {
             showError('Le mot de passe doit comporter au moins 8 caractères, dont une majuscule, une minuscule, un chiffre et un symbole.');
