@@ -6,8 +6,8 @@ const authMiddleware = require('./app/authMiddleware');
 const sequelize = require('./app/config/database');
 const dotenv = require('dotenv');
 const routes = require('./app/routes');
+const RedisStore = require('connect-redis')(session);
 const { createClient } = require('redis');
-const RedisStore = require('connect-redis').default; // Utilisation correcte de connect-redis
 
 // Charger les variables d'environnement
 dotenv.config();
@@ -16,10 +16,18 @@ const app = express();
 
 // Configurer le client Redis
 const redisClient = createClient({
-  url: process.env.REDIS_URL, // Assurez-vous d'avoir une URL Redis dans votre .env
-  legacyMode: true, // nécessaire pour la compatibilité avec connect-redis
+  url: process.env.REDIS_URL, // URL Redis depuis .env
+  legacyMode: true, // Nécessaire pour compatibilité avec connect-redis
+  socket: {
+    tls: true, // Activer TLS si nécessaire
+    rejectUnauthorized: false // Pour les tests ; mettez à true en production avec des certificats valides
+  }
 });
-redisClient.connect().catch(console.error);
+
+redisClient.connect().catch((err) => {
+  console.error('Erreur de connexion Redis:', err);
+  process.exit(1); // Arrêter l'application si Redis ne peut pas se connecter
+});
 
 // Middleware pour le parsing des requêtes
 app.use(express.json());
@@ -32,7 +40,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(
   session({
-    store: new RedisStore({ client: redisClient }), // Utilisation correcte du RedisStore avec le client
+    store: new RedisStore({ client: redisClient }),
     secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
@@ -53,7 +61,6 @@ app.use((req, res, next) => {
   res.locals.message = req.cookies.message || null;
   res.locals.error = req.cookies.error || null;
 
-  // Supprimer les messages flash des cookies après les avoir transférés
   res.clearCookie('message');
   res.clearCookie('error');
   next();
@@ -95,12 +102,11 @@ sequelize
 
 // Gestion des erreurs
 app.use((err, req, res, next) => {
-  console.error(err.stack); // Log l'erreur pour le débogage
-
+  console.error(err.stack);
   res.status(err.status || 500).json({
     success: false,
     message: err.message || 'Erreur du serveur. Veuillez réessayer plus tard.',
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined, // Afficher la pile d'appels en mode développement
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
   });
 });
 
