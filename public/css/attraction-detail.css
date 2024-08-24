@@ -34,7 +34,6 @@ body {
     background: none;
     border: none;
     font-size: 2em;
-    color: #ccc;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -49,7 +48,7 @@ body {
 }
 
 /* Style pour le cœur quand il est aimé */
-.red-heart {
+.like-btn.liked .heart {
     color: #ff1744; /* Couleur rouge pour le cœur quand il est activé */
 }
 

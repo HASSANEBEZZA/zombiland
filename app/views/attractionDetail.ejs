@@ -23,13 +23,13 @@
                         <span class="heart <%= userLiked ? 'red-heart' : '' %>">&hearts;</span>
                     </button>
                 <% } else { %>
-                    <li class="connecter"><a href="/login" >Veuillez vous connecter pour liké cette attraction</a></li>
+                    <p class="connecter"><a href="/login">Veuillez vous connecter pour liker cette attraction</a></p>
                 <% } %>
                 <span class="like-count" id="like-count"><%= likeCount %></span>
             </div>
         </div>
         <p><%= attraction.description %></p>
-       <li class="reservation-link"><a href="/register" class="modern-button">Réservez votre billet d'entrée.</a></li>
+        <p class="reservation-link"><a href="/reservation" class="modern-button">Réservez votre billet d'entrée</a></p>
     </div>
 
     <div class="comments-container">
@@ -58,9 +58,8 @@
                 <button type="submit" class="action-button add-button">Ajouter</button>
             </form>
         <% } else { %>
-            <li class="connecter" class="connectercomt"><a href="/login" >Veuillez vous connecter pour ajouter un commentaire</a></li> .</p>
+            <p class="connecter"><a href="/login">Veuillez vous connecter pour ajouter un commentaire</a></p>
         <% } %>
-        
     </div>
 </main>
 

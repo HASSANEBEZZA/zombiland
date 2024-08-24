@@ -22,7 +22,7 @@ body {
     align-items: center;
     padding: 20px;
     width: 100%;
-    max-width: 1200px; /* Augmente la largeur maximale de la page */
+    max-width: 1200px; /*  la largeur maximale de la page */
     margin: auto; /* Centrer horizontalement */
 }
 
@@ -55,10 +55,10 @@ body {
 /* Bouton de fermeture */
 .close-button {
     position: absolute;
-    top: 10px; /* Ajustez la position vers le bas pour qu'elle soit dans la page */
-    right: 10px; /* Ajustez la position vers la gauche pour qu'elle soit dans la page */
-    width: 40px; /* Taille du bouton rond */
-    height: 40px; /* Taille du bouton rond */
+    top: 10px; 
+    right: 10px; 
+    width: 40px; 
+    height: 40px; 
     background-color: #c4b8b8;
     border: 2px solid #333;
     border-radius: 50%;

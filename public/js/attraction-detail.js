@@ -1,8 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Sélectionne le bouton de like et le compteur de likes
     const likeButton = document.querySelector('.like-btn');
     const likeCountElement = document.getElementById('like-count');
+    
+    if (!likeButton) return; // Assurez-vous que le bouton existe avant de continuer
+
+    // Récupère l'ID de l'attraction depuis le bouton
     const attractionId = likeButton.getAttribute('data-attraction-id');
-    let userLiked = likeButton.classList.contains('liked');
+    let userLiked = likeButton.classList.contains('liked'); // Vérifie si l'utilisateur a déjà liké
 
     // Fonction pour gérer le clic sur le bouton de like
     const handleLikeToggle = () => {
@@ -30,7 +35,5 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Ajoute un écouteur d'événement pour le clic sur le bouton de like
-    if (likeButton) {
-        likeButton.addEventListener('click', handleLikeToggle);
-    }
+    likeButton.addEventListener('click', handleLikeToggle);
 });
