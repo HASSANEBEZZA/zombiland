@@ -15,16 +15,29 @@ dotenv.config();
 const app = express();
 
 // Configuration Redis
-const redisHost = process.env.REDIS_HOST || 'localhost';
-const redisPort = process.env.REDIS_PORT || '6379';
-const redisPassword = process.env.REDIS_PASSWORD || '';
+const redisHost = process.env.REDIS_HOST;
+const redisPort = process.env.REDIS_PORT;
+const redisPassword = process.env.REDIS_PASSWORD;
 
-const redisUrl = redisPassword
-  ? `redis://:${redisPassword}@${redisHost}:${redisPort}`
-  : `redis://${redisHost}:${redisPort}`;
+// Vérifiez si les variables nécessaires sont présentes
+if (!redisHost || !redisPort) {
+  console.error('Configuration Redis manquante');
+  process.exit(1);
+}
 
+// Construire l'URL Redis en fonction des paramètres
+let redisUrl = `redis://${redisHost}:${redisPort}`;
+if (redisPassword) {
+  redisUrl = `redis://:${redisPassword}@${redisHost}:${redisPort}`;
+}
+
+// Création du client Redis avec TLS activé
 const redisClient = Redis.createClient({
   url: redisUrl,
+  socket: {
+    tls: true, // Activer TLS pour une connexion sécurisée
+    rejectUnauthorized: false // Vous pouvez ajuster cette option selon vos besoins de sécurité
+  }
 });
 
 // Gestion des erreurs de connexion Redis
