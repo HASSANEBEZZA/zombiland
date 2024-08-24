@@ -17,10 +17,6 @@ const app = express();
 // Configurer le client Redis
 const redisClient = createClient({
   url: process.env.REDIS_URL, // Assurez-vous d'avoir une URL Redis dans votre .env
-  socket: {
-    tls: process.env.REDIS_TLS === 'true', // Utiliser TLS si spécifié dans les variables d'environnement
-    rejectUnauthorized: false // Pour les tests ; mettre à true avec des certificats valides en production
-  }
 });
 
 redisClient.on('error', (err) => {
