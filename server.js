@@ -6,8 +6,8 @@ const authMiddleware = require('./app/authMiddleware');
 const sequelize = require('./app/config/database');
 const dotenv = require('dotenv');
 const routes = require('./app/routes');
-const RedisStore = require('connect-redis')(session);
 const { createClient } = require('redis');
+const RedisStore = require('connect-redis')(session);
 
 // Charger les variables d'environnement
 dotenv.config();
