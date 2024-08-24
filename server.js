@@ -7,7 +7,7 @@ const sequelize = require('./app/config/database');
 const dotenv = require('dotenv');
 const routes = require('./app/routes');
 const { createClient } = require('redis');
-const RedisStore = require('connect-redis');
+const RedisStore = require('connect-redis')(session);
 
 // Charger les variables d'environnement
 dotenv.config();
@@ -16,12 +16,16 @@ const app = express();
 
 // Configurer le client Redis
 const redisClient = createClient({
-  url: process.env.REDIS_URL, // URL Redis depuis .env
-  legacyMode: true, // Nécessaire pour compatibilité avec connect-redis
+  url: process.env.REDIS_URL, // Assurez-vous d'avoir une URL Redis dans votre .env
   socket: {
-    tls: true, // Activer TLS si nécessaire
-    rejectUnauthorized: false // Pour les tests ; mettez à true en production avec des certificats valides
+    tls: process.env.REDIS_TLS === 'true', // Utiliser TLS si spécifié dans les variables d'environnement
+    rejectUnauthorized: false // Pour les tests ; mettre à true avec des certificats valides en production
   }
+});
+
+redisClient.on('error', (err) => {
+  console.error('Erreur de connexion Redis:', err);
+  process.exit(1); // Arrêter l'application si Redis ne peut pas se connecter
 });
 
 redisClient.connect().catch((err) => {
