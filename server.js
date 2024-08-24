@@ -7,7 +7,7 @@ const sequelize = require('./app/config/database');
 const dotenv = require('dotenv');
 const routes = require('./app/routes');
 const { createClient } = require('redis');
-const RedisStore = require('connect-redis')(session);
+const RedisStore = require('connect-redis'); // Importation correcte pour v7.x
 
 // Charger les variables d'environnement
 dotenv.config();
