@@ -1,51 +1,29 @@
+// Charger les variables d'environnement
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
 const authMiddleware = require('./app/authMiddleware');
-const sequelize = require('./app/config/database');
-const dotenv = require('dotenv');
 const routes = require('./app/routes');
-const connectRedis = require('connect-redis');
-const { createClient } = require('redis');
-const RedisStore = require('connect-redis')(session); // Importer le module RedisStore correctement
+const MemoryStore = require('session-memory-store')(session); // Importer le store en mémoire
 
-// Charger les variables d'environnement
-dotenv.config();
-
+// Initialiser l'application Express
 const app = express();
-
-// Configurer le client Redis
-const redisClient = createClient({
-  url: process.env.REDIS_URL, // URL Redis à partir des variables d'environnement
-  socket: {
-    tls: process.env.REDIS_TLS === 'true', // Utiliser TLS si spécifié dans les variables d'environnement
-    rejectUnauthorized: process.env.REDIS_TLS === 'true' // Pour les tests ; mettre à true avec des certificats valides en production
-  }
-});
-
-redisClient.on('error', (err) => {
-  console.error('Erreur de connexion Redis:', err);
-  process.exit(1); // Arrêter l'application si Redis ne peut pas se connecter
-});
-
-redisClient.connect().catch((err) => {
-  console.error('Erreur de connexion Redis:', err);
-  process.exit(1); // Arrêter l'application si Redis ne peut pas se connecter
-});
-
-// Middleware pour le parsing des requêtes
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 // Configuration de la session
 const sessionSecret = process.env.SESSION_SECRET || 'default-secret';
 const isProduction = process.env.NODE_ENV === 'production';
 
+// Créer le store en mémoire
+const store = new MemoryStore();
+
+// Middleware pour la gestion des sessions
 app.use(
   session({
-    store: new RedisStore({ client: redisClient }),
+    store: store,
     secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
@@ -57,6 +35,11 @@ app.use(
     },
   })
 );
+
+// Middleware pour le parsing des requêtes
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Middleware d'authentification
 app.use(authMiddleware);
@@ -94,16 +77,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Utiliser le fichier de routes
 app.use('/', routes);
-
-// Authentification de la base de données
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connexion à la base de données réussie !');
-  })
-  .catch((err) => {
-    console.error('Impossible de se connecter à la base de données:', err);
-  });
 
 // Gestion des erreurs
 app.use((err, req, res, next) => {
