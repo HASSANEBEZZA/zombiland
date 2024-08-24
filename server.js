@@ -1,50 +1,18 @@
+// server.js
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
-const RedisStore = require('connect-redis').default;
-const Redis = require('redis');
 const authMiddleware = require('./app/authMiddleware');
 const sequelize = require('./app/config/database');
 const dotenv = require('dotenv');
 const routes = require('./app/routes');
+const redisStore = require('./app/config/redisStore'); // Utilisez le store Redis configuré
 
 // Charger les variables d'environnement
 dotenv.config();
 
 const app = express();
-
-// Configuration Redis
-const redisHost = process.env.REDIS_HOST;
-const redisPort = process.env.REDIS_PORT;
-const redisPassword = process.env.REDIS_PASSWORD;
-
-// Vérifiez si les variables nécessaires sont présentes
-if (!redisHost || !redisPort) {
-  console.error('Configuration Redis manquante');
-  process.exit(1);
-}
-
-// Construire l'URL Redis en fonction des paramètres
-let redisUrl = `redis://${redisHost}:${redisPort}`;
-if (redisPassword) {
-  redisUrl = `redis://:${redisPassword}@${redisHost}:${redisPort}`;
-}
-
-// Création du client Redis avec TLS activé
-const redisClient = Redis.createClient({
-  url: redisUrl,
-  socket: {
-    tls: true, // Activer TLS pour une connexion sécurisée
-    rejectUnauthorized: false // Vous pouvez ajuster cette option selon vos besoins de sécurité
-  }
-});
-
-// Gestion des erreurs de connexion Redis
-redisClient.on('error', (err) => console.error('Erreur de connexion Redis :', err));
-
-// Connexion à Redis
-redisClient.connect().catch(console.error);
 
 // Middleware pour le parsing des requêtes
 app.use(express.json());
@@ -57,7 +25,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(
   session({
-    store: new RedisStore({ client: redisClient }),
+    store: redisStore,
     secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
