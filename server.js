@@ -6,7 +6,6 @@ const authMiddleware = require('./app/authMiddleware');
 const sequelize = require('./app/config/database');
 const dotenv = require('dotenv');
 const routes = require('./app/routes');
-const redisStore = require('./app/config/redisStore'); // Utilisez le store Redis configuré
 
 // Charger les variables d'environnement
 dotenv.config();
@@ -24,7 +23,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(
   session({
-    store: redisStore,
+    // Retirez le store Redis
     secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
