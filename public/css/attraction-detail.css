@@ -22,13 +22,13 @@ body {
     border-radius: 15px;
 }
 
-.connecter{
+.connecter {
     color: #007bff;
     font-size: larger;
     list-style-type: none;
     padding-left: 0;
-
 }
+
 /* Style général pour les boutons de like */
 .like-btn {
     background: none;
@@ -41,8 +41,16 @@ body {
     justify-content: center;
 }
 
-.like-btn.liked .heart {
-    color: #ff1744; /* Couleur rouge foncé quand le like est actif */
+/* Style pour le cœur */
+.heart {
+    color: #ccc; /* Couleur par défaut du cœur */
+    transition: color 0.3s ease;
+    font-size: 1em; /* Taille du cœur */
+}
+
+/* Style pour le cœur quand il est aimé */
+.red-heart {
+    color: #ff1744; /* Couleur rouge pour le cœur quand il est activé */
 }
 
 /* Style pour le compteur de likes */
@@ -60,13 +68,6 @@ body {
     justify-content: center;
     margin-top: 20px;
     font-size: 1.5em; /* Augmente la taille du cœur */
-}
-
-/* Style pour le cœur */
-.heart {
-    color: #ccc; /* Couleur par défaut du cœur */
-    transition: color 0.3s ease;
-    font-size: 1em; /* Augmente la taille du cœur */
 }
 
 /* Commentaires */
@@ -146,33 +147,32 @@ button:active {
     padding-left: 0;
 }
 
-/* Style  pour les bouton */
-
+/* Style pour les boutons */
 .modern-button {
     display: inline-block;
     padding: 12px 24px;
-    background: linear-gradient(90deg, #007BFF, #00C6FF); 
+    background: linear-gradient(90deg, #007BFF, #00C6FF);
     color: white;
     text-decoration: none;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
-    border-radius: 30px; 
-    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); 
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
     transition: all 0.3s ease;
 }
 
 /* Effet au survol */
 .modern-button:hover {
-    background: linear-gradient(90deg, #00C6FF, #007BFF); 
-    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6); 
-    transform: translateY(-2px); 
+    background: linear-gradient(90deg, #00C6FF, #007BFF);
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6);
+    transform: translateY(-2px);
 }
 
 /* Effet au clic */
 .modern-button:active {
     background: #0062cc; /* Couleur plus foncée au clic */
-    box-shadow: 0 3px 10px rgba(0, 123, 255, 0.3); 
+    box-shadow: 0 3px 10px rgba(0, 123, 255, 0.3);
     transform: translateY(0); /* Repositionne le bouton */
 }
 
@@ -195,25 +195,25 @@ button:active {
 }
 
 .edit-button:hover {
-    background: linear-gradient(90deg, #5ac8fa, #34c759); 
-    transform: translateY(-2px); 
-    box-shadow: 0 6px 20px rgba(52, 199, 89, 0.5); 
+    background: linear-gradient(90deg, #5ac8fa, #34c759);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 199, 89, 0.5);
 }
 
 .edit-button:active {
-    background-color: #28a745; 
+    background-color: #28a745;
     transform: translateY(0); /* Repositionne le bouton */
 }
 
 /* Bouton Supprimer */
 .delete-button {
-    background: linear-gradient(90deg, #b90e05, #e01e1e); 
+    background: linear-gradient(90deg, #b90e05, #e01e1e);
 }
 
 .delete-button:hover {
-    background: linear-gradient(90deg, #d83838, #da1107); 
-    transform: translateY(-2px); 
-    box-shadow: 0 6px 20px rgba(255, 59, 48, 0.5); 
+    background: linear-gradient(90deg, #d83838, #da1107);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 59, 48, 0.5);
 }
 
 .delete-button:active {
