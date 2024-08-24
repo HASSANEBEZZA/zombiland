@@ -9,18 +9,26 @@ const sequelize = require('./app/config/database');
 const dotenv = require('dotenv');
 const routes = require('./app/routes'); 
 
+// Charger les variables d'environnement
 dotenv.config();
 
 const app = express();
 
-// Séparation des variables Redis
+// Configuration Redis
 const redisHost = process.env.REDIS_HOST || 'localhost';
 const redisPort = process.env.REDIS_PORT || '6379';
 const redisPassword = process.env.REDIS_PASSWORD || '';
 
-// Configuration de Redis sans TLS
+let redisUrl = `redis://`;
+
+if (redisPassword) {
+  redisUrl += `:${redisPassword}@`;
+}
+
+redisUrl += `${redisHost}:${redisPort}`;
+
 const redisClient = Redis.createClient({
-  url: `redis://:${redisPassword}@${redisHost}:${redisPort}`
+  url: redisUrl,
 });
 
 // Gestion des erreurs de connexion Redis
@@ -38,7 +46,6 @@ app.use(cookieParser());
 const sessionSecret = process.env.SESSION_SECRET || 'default-secret';
 const isProduction = process.env.NODE_ENV === 'production';
 
-// Middleware pour la gestion des sessions avec Redis
 app.use(
   session({
     store: new RedisStore({ client: redisClient }),
@@ -49,8 +56,8 @@ app.use(
       secure: isProduction, // Assurez-vous que l'application utilise HTTPS en production
       httpOnly: true,
       maxAge: 3600000, // 1 heure
-      sameSite: 'Strict'
-    }
+      sameSite: 'Strict',
+    },
   })
 );
 
@@ -82,6 +89,7 @@ app.use((req, res, next) => {
   next();
 });
 
+// Configuration du moteur de vues
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'app', 'views'));
 
@@ -95,7 +103,7 @@ app.use('/', routes);
 sequelize
   .authenticate()
   .then(() => {
-    console.log('Connection à la base de données réussie !');
+    console.log('Connexion à la base de données réussie !');
   })
   .catch((err) => {
     console.error('Impossible de se connecter à la base de données:', err);
@@ -108,10 +116,11 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
     success: false,
     message: err.message || 'Erreur du serveur. Veuillez réessayer plus tard.',
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined // Afficher la pile d'appels en mode développement
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined, // Afficher la pile d'appels en mode développement
   });
 });
 
+// Démarrage du serveur
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Serveur en écoute sur le port ${PORT}`);
