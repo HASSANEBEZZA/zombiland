@@ -7,7 +7,7 @@ const sequelize = require('./app/config/database');
 const dotenv = require('dotenv');
 const routes = require('./app/routes');
 const { createClient } = require('redis');
-const RedisStore = require('connect-redis');
+const RedisStore = require('connect-redis'); // Assurez-vous d'importer le bon module
 
 // Charger les variables d'environnement
 dotenv.config();
@@ -16,7 +16,11 @@ const app = express();
 
 // Configurer le client Redis
 const redisClient = createClient({
-  url: 'redis://redis-14094.c339.eu-west-3-1.ec2.redns.redis-cloud.com:14094' // Utiliser le bon URL
+  url: process.env.REDIS_URL, // Assurez-vous d'avoir une URL Redis dans votre .env
+  socket: {
+    tls: process.env.REDIS_TLS === 'true', // Utiliser TLS si spécifié dans les variables d'environnement
+    rejectUnauthorized: process.env.REDIS_TLS === 'true' // Pour les tests ; mettre à true avec des certificats valides en production
+  }
 });
 
 redisClient.on('error', (err) => {
