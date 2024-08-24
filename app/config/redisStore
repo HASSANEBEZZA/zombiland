@@ -1,0 +1,11 @@
+const session = require('express-session');
+const RedisStore = require('connect-redis').default;
+
+const redisClient = require('./redisClient'); // Assurez-vous que le client est correct
+
+const redisStore = new RedisStore({
+  client: redisClient,
+  prefix: 'sess:', // Optionnel : le préfixe utilisé pour les clés Redis
+});
+
+module.exports = redisStore;
