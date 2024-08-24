@@ -6,6 +6,7 @@ const authMiddleware = require('./app/authMiddleware');
 const sequelize = require('./app/config/database');
 const dotenv = require('dotenv');
 const routes = require('./app/routes');
+const connectRedis = require('connect-redis');
 const { createClient } = require('redis');
 const RedisStore = require('connect-redis')(session); // Importer le module RedisStore correctement
 
