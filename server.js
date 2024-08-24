@@ -3,7 +3,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
 const RedisStore = require('connect-redis').default;
-const redisClient = require('./app/config/redisClient');
+const Redis = require('redis'); 
 const authMiddleware = require('./app/authMiddleware');
 const sequelize = require('./app/config/database');
 const dotenv = require('dotenv');
@@ -12,6 +12,22 @@ const routes = require('./app/routes');
 dotenv.config();
 
 const app = express();
+
+// Séparation des variables Redis
+const redisHost = process.env.REDIS_HOST || 'localhost';
+const redisPort = process.env.REDIS_PORT || '6379';
+const redisPassword = process.env.REDIS_PASSWORD || '';
+
+// Configuration de Redis sans TLS
+const redisClient = Redis.createClient({
+  url: `redis://:${redisPassword}@${redisHost}:${redisPort}`
+});
+
+// Gestion des erreurs de connexion Redis
+redisClient.on('error', (err) => console.error('Erreur de connexion Redis :', err));
+
+// Connexion à Redis
+redisClient.connect().catch(console.error);
 
 // Middleware pour le parsing des requêtes
 app.use(express.json());
@@ -30,7 +46,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: isProduction, 
+      secure: isProduction, // Assurez-vous que l'application utilise HTTPS en production
       httpOnly: true,
       maxAge: 3600000, // 1 heure
       sameSite: 'Strict'
@@ -79,10 +95,10 @@ app.use('/', routes);
 sequelize
   .authenticate()
   .then(() => {
-   
+    console.log('Connection à la base de données réussie !');
   })
   .catch((err) => {
-    console.error('Unable to connect to the database:', err);
+    console.error('Impossible de se connecter à la base de données:', err);
   });
 
 // Gestion des erreurs
@@ -98,5 +114,5 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-
+  console.log(`Serveur en écoute sur le port ${PORT}`);
 });
