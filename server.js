@@ -3,11 +3,11 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
 const RedisStore = require('connect-redis').default;
-const Redis = require('redis'); 
+const Redis = require('redis');
 const authMiddleware = require('./app/authMiddleware');
 const sequelize = require('./app/config/database');
 const dotenv = require('dotenv');
-const routes = require('./app/routes'); 
+const routes = require('./app/routes');
 
 // Charger les variables d'environnement
 dotenv.config();
@@ -19,13 +19,9 @@ const redisHost = process.env.REDIS_HOST || 'localhost';
 const redisPort = process.env.REDIS_PORT || '6379';
 const redisPassword = process.env.REDIS_PASSWORD || '';
 
-let redisUrl = `redis://`;
-
-if (redisPassword) {
-  redisUrl += `:${redisPassword}@`;
-}
-
-redisUrl += `${redisHost}:${redisPort}`;
+const redisUrl = redisPassword
+  ? `redis://:${redisPassword}@${redisHost}:${redisPort}`
+  : `redis://${redisHost}:${redisPort}`;
 
 const redisClient = Redis.createClient({
   url: redisUrl,

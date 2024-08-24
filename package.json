@@ -4,7 +4,8 @@
   "description": "C'est un  projet qui vise à développer un site internet pour presenter les les différentes services d'un parc d'attraction, ce qui va permettre aux utilisateurs de découvrir les maneges, les spectacles, et les restaurants et les pour les gens qui veulent  dormir sur place . La partie backend de ce projet utilise Node.js pour le serveur et PostgreSQL comme base de données. Nous avons mis en place une API pour gérer les opérations CRUD (Create, Read, Update, Delete) sur les données de site.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+     "start": "NODE_ENV=production node server.js",
+  "dev": "NODE_ENV=development nodemon server.js"
   },
   "keywords": [],
   "author": "",
