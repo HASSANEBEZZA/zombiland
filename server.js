@@ -6,11 +6,20 @@ const authMiddleware = require('./app/authMiddleware');
 const sequelize = require('./app/config/database');
 const dotenv = require('dotenv');
 const routes = require('./app/routes');
+const RedisStore = require('connect-redis')(session);
+const { createClient } = require('redis');
 
 // Charger les variables d'environnement
 dotenv.config();
 
 const app = express();
+
+// Configurer le client Redis
+const redisClient = createClient({
+  url: process.env.REDIS_URL, // Assurez-vous d'avoir une URL Redis dans votre .env
+  legacyMode: true, // nécessaire pour la compatibilité avec connect-redis
+});
+redisClient.connect().catch(console.error);
 
 // Middleware pour le parsing des requêtes
 app.use(express.json());
@@ -23,7 +32,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(
   session({
-    // Retirez le store Redis
+    store: new RedisStore({ client: redisClient }),
     secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
