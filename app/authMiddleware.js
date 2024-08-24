@@ -40,7 +40,7 @@ async function authMiddleware(req, res, next) {
       // En cas d'erreur dans la gestion des utilisateurs, définir l'utilisateur courant sur null et passer au prochain middleware
       console.error('Erreur dans le middleware d\'authentification:', error);
       res.locals.currentUser = null;
-      next(error);
+      next(error); // Passe l'erreur au middleware de gestion des erreurs
     }
   });
 }

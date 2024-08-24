@@ -1,6 +1,5 @@
 // Charger les variables d'environnement
-const dotenv = require('dotenv');
-dotenv.config();
+require('dotenv').config();
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
@@ -18,7 +17,10 @@ const sessionSecret = process.env.SESSION_SECRET || 'default-secret';
 const isProduction = process.env.NODE_ENV === 'production';
 
 // Créer le store en mémoire
-const store = new MemoryStore();
+const store = new MemoryStore({
+  // Spécifiez le chemin de stockage en mémoire si nécessaire
+  // store: process.env.SESSION_STORE_PATH
+});
 
 // Middleware pour la gestion des sessions
 app.use(
