@@ -1,4 +1,3 @@
-// app/config/redisClient.js
 const Redis = require('redis');
 const redisHost = process.env.REDIS_HOST || 'localhost';
 const redisPort = process.env.REDIS_PORT || '6379';
@@ -10,17 +9,16 @@ if (redisPassword) {
   redisUrl = `redis://:${redisPassword}@${redisHost}:${redisPort}`;
 }
 
-// Création du client Redis avec TLS activé
+// Création du client Redis sans TLS
 const redisClient = Redis.createClient({
   url: redisUrl,
   socket: {
-    tls: true, // Activer TLS pour une connexion sécurisée
-    rejectUnauthorized: false // Pour les tests; mettre à true en production avec des certificats valides
+    // TLS est désactivé
   }
 });
 
 // Gestion des erreurs de connexion Redis
-redisClient.on('error', (err) => console.error('Erreur de connexion Redis :', err));
+redisClient.on('error', (err) => console.error('Erreur de connexion Redis server :', err));
 
 // Connexion à Redis
 redisClient.connect().catch(console.error);
