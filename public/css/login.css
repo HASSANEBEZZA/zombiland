@@ -11,10 +11,12 @@ body {
 /* Style pour la carte de connexion */
 .card {
     border-radius: 12px; /* Coins arrondis pour un effet moderne */
+    margin-top: 160px;
 }
 
 .containerr {
     background: rgba(255, 255, 255, 0.925)!important;
+
 }
 
 
