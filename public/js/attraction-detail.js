@@ -7,8 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const attractionId = likeButton.getAttribute('data-attraction-id');
     let userLiked = likeButton.classList.contains('liked');
 
+    console.log('Initial userLiked:', userLiked);
+
     const handleLikeToggle = (event) => {
-        event.preventDefault(); // Empêche tout comportement par défaut lié aux événements tactiles
+        event.preventDefault();
 
         fetch('/toggleLike', {
             method: 'POST',
@@ -23,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Erreur:', data.error);
             } else {
                 userLiked = !userLiked;
+                console.log('Toggled userLiked:', userLiked);
                 likeCountElement.textContent = data.likeCount;
                 likeButton.classList.toggle('liked', userLiked);
                 likeButton.querySelector('.heart').classList.toggle('red-heart', userLiked);
@@ -31,7 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Erreur:', error));
     };
 
-    // Ajout des écouteurs pour les événements "click" et "touchstart"
-    likeButton.addEventListener('click', handleLikeToggle);
-    likeButton.addEventListener('touchstart', handleLikeToggle);
+    // Détecter si l'utilisateur est sur un appareil mobile
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    // Utiliser pointerdown pour les appareils mobiles et desktop
+    likeButton.addEventListener('pointerdown', handleLikeToggle);
 });
