@@ -7,7 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const attractionId = likeButton.getAttribute('data-attraction-id');
     let userLiked = likeButton.classList.contains('liked');
 
-    const handleLikeToggle = () => {
+    const handleLikeToggle = (event) => {
+        event.preventDefault(); // Empêche tout comportement par défaut lié aux événements tactiles
+
         fetch('/toggleLike', {
             method: 'POST',
             headers: {
