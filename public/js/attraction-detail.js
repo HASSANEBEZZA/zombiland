@@ -1,15 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Sélectionne le bouton de like et le compteur de likes
     const likeButton = document.querySelector('.like-btn');
     const likeCountElement = document.getElementById('like-count');
     
-    if (!likeButton) return; // Assurez-vous que le bouton existe avant de continuer
+    if (!likeButton) return;
 
-    // Récupère l'ID de l'attraction depuis le bouton
     const attractionId = likeButton.getAttribute('data-attraction-id');
-    let userLiked = likeButton.classList.contains('liked'); // Vérifie si l'utilisateur a déjà liké
+    let userLiked = likeButton.classList.contains('liked');
 
-    // Fonction pour gérer le clic sur le bouton de like
     const handleLikeToggle = () => {
         fetch('/toggleLike', {
             method: 'POST',
@@ -23,10 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.error) {
                 console.error('Erreur:', data.error);
             } else {
-                // Met à jour le compteur de likes
-                likeCountElement.textContent = data.likeCount;
-                // Bascule l'état du bouton de like
                 userLiked = !userLiked;
+                likeCountElement.textContent = data.likeCount;
                 likeButton.classList.toggle('liked', userLiked);
                 likeButton.querySelector('.heart').classList.toggle('red-heart', userLiked);
             }
@@ -34,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Erreur:', error));
     };
 
-    // Ajoute un écouteur d'événement pour le clic sur le bouton de like
+    // Ajout des écouteurs pour les événements "click" et "touchstart"
     likeButton.addEventListener('click', handleLikeToggle);
+    likeButton.addEventListener('touchstart', handleLikeToggle);
 });

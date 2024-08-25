@@ -13,11 +13,10 @@
 
     <div class="container my-5 flex-grow-1">
         <div class="row justify-content-center">
-            <div class="col-md-4"> <!-- Réduire la largeur ici -->
+            <div class="col-md-4">
                 <div class="card shadow-lg">
                     <div class="card-body">
                         <h2 class="text-center mb-4">Connexion</h2>
-                        <!-- Affichage des messages d'erreur et de succès -->
                         <% if (message) { %>
                             <div class="alert <%= error ? 'alert-danger' : 'alert-success' %>" role="alert">
                                 <%= message %>
@@ -37,6 +36,9 @@
                         <div class="text-center mt-3">
                             <a href="/request-reset">Mot de passe oublié ?</a>
                         </div>
+                        <div class="text-center mt-2">
+                            <p>Vous n'avez pas de compte ? <br> <a href="/register">Inscrivez-vous ici</a>.</p>
+                        </div>
                         <div id="form-message" class="form-message mt-3"></div>
                     </div>
                 </div>
@@ -44,9 +46,7 @@
         </div>
     </div>
 
-
-        <%- include('partials/footer') %>
-  
+    <%- include('partials/footer') %>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
