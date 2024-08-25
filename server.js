@@ -7,7 +7,7 @@ const session = require('express-session');
 const path = require('path');
 const authMiddleware = require('./app/authMiddleware');
 const routes = require('./app/routes');
-const MemoryStore = require('session-memory-store')(session); // Importer le store en mémoire
+const MemoryStore = require('session-memory-store')(session); 
 
 // Initialiser l'application Express
 const app = express();
@@ -16,7 +16,7 @@ const app = express();
 const sessionSecret = process.env.SESSION_SECRET || 'default-secret';
 const isProduction = process.env.NODE_ENV === 'production';
 
-// Créer le store en mémoire
+// Création de store en mémoire
 const store = new MemoryStore({
   // Spécifiez le chemin de stockage en mémoire si nécessaire
   // store: process.env.SESSION_STORE_PATH
@@ -30,7 +30,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: isProduction, // Assurez-vous que l'application utilise HTTPS en production
+      secure: isProduction, 
       httpOnly: true,
       maxAge: 3600000, // 1 heure
       sameSite: 'Strict',
@@ -93,5 +93,5 @@ app.use((err, req, res, next) => {
 // Démarrage du serveur
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`Serveur en écoute sur le port ${PORT}`);
+ 
 });
