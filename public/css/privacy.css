@@ -1,5 +1,5 @@
 body {
-    background-color: #9487935d !important; /* Couleur de fond avec priorité */
+    background-color: #9487935d !important; 
     padding-top: 20px;
     padding-bottom: 20px;
 }
@@ -18,7 +18,7 @@ body {
     margin-bottom: 40px;
 }
 
-/* Titre principal */
+
 #privacy-policy-page h1 {
     font-size: 2.5em;
     color: #34495e;
@@ -28,7 +28,7 @@ body {
     padding-bottom: 10px;
 }
 
-/* Titres des sections */
+
 #privacy-policy-page h2 {
     font-size: 1.8em;
     margin-top: 30px;
@@ -55,13 +55,13 @@ body {
     color: #555;
 }
 
-/* Mettez en avant les informations importantes */
+
 #privacy-policy-page strong {
     color: #2980b9;
     font-weight: bold;
 }
 
-/* Lien hypertexte */
+
 #privacy-policy-page a {
     color: #e74c3c;
     text-decoration: none;
