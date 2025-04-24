@@ -7,7 +7,7 @@ const session = require('express-session');
 const path = require('path');
 const authMiddleware = require('./app/authMiddleware');
 const routes = require('./app/routes');
-const MemoryStore = require('session-memory-store')(session);
+const MemoryStore = require('session-memory-store')(session); 
 
 // Initialiser l'application Express
 const app = express();
@@ -16,56 +16,68 @@ const app = express();
 const sessionSecret = process.env.SESSION_SECRET || 'default-secret';
 const isProduction = process.env.NODE_ENV === 'production';
 
-// Création du store en mémoire (utile si tu ne veux pas de base de données)
-const store = new MemoryStore();
+// Création de store en mémoire
+const store = new MemoryStore({
+  // Spécifiez le chemin de stockage en mémoire si nécessaire
+  // store: process.env.SESSION_STORE_PATH
+});
 
-// Middleware de session
+// Middleware pour la gestion des sessions
 app.use(
   session({
-    store,
+    store: store,
     secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: isProduction,
+      secure: isProduction, 
       httpOnly: true,
-      maxAge: 3600000, // 1h
+      maxAge: 3600000, // 1 heure
       sameSite: 'Strict',
     },
   })
 );
 
-// Middleware parsing
+// Middleware pour le parsing des requêtes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Auth
+// Middleware d'authentification
 app.use(authMiddleware);
 
-// Middleware pour les messages flash
+// Middleware pour gérer les messages flash
 app.use((req, res, next) => {
   res.locals.message = req.cookies.message || null;
   res.locals.error = req.cookies.error || null;
+
   res.clearCookie('message');
   res.clearCookie('error');
   next();
 });
 
-// Middleware utilisateur courant
+// Middleware pour afficher les données de la session
 app.use((req, res, next) => {
-  res.locals.currentUser = req.session?.userId ? { username: req.session.username } : null;
+  if (!req.session) {
+    return next(new Error('Session non initialisée'));
+  }
   next();
 });
 
-// Vues
+// Middleware pour ajouter les données de l'utilisateur courant aux vues
+app.use((req, res, next) => {
+  res.locals.currentUser = req.session.userId ? { username: req.session.username } : null;
+  next();
+});
+
+// Configuration du moteur de vues
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'app', 'views'));
 
-// Fichiers statiques
+// Middleware pour servir des fichiers statiques
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
+// Utiliser le fichier de routes
 app.use('/', routes);
 
 // Gestion des erreurs
@@ -73,13 +85,13 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).json({
     success: false,
-    message: err.message || 'Erreur du serveur.',
+    message: err.message || 'Erreur du serveur. Veuillez réessayer plus tard.',
     stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
   });
 });
 
-// Lancement du serveur
+// Démarrage du serveur
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`Serveur lancé sur http://localhost:${PORT}`);
+ 
 });
